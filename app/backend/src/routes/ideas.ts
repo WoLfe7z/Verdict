@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { authenticate } from '../middleware/auth'
-import {createIdea, getIdeas, getIdea, updateIdea, deleteIdea, archiveIdea} from '../controllers/ideaController'
+import {createIdea, getIdeas, getIdea, updateIdea, deleteIdea, archiveIdea, analyzeIdea} from '../controllers/ideaController'
 import { validateIdeaInput } from '../middleware/validate'
 
 const router = Router()
@@ -13,5 +13,6 @@ router.get('/:id', getIdea)
 router.put('/:id', validateIdeaInput, updateIdea)
 router.delete('/:id', deleteIdea)
 router.post('/:id/archive', archiveIdea)
+router.post('/:id/analyze', analyzeIdea)
 
 export default router
