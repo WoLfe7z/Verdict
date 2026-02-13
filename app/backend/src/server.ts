@@ -5,6 +5,14 @@ import dotenv from 'dotenv'
 import { errorHandler } from './middleware/errorHandler'
 import { supabase } from './services/supabase'  // Import Supabase client
 
+// Routes
+import authRoutes from './routes/auth'
+import ideaRoutes from './routes/ideas'
+import dashboardRoutes from './routes/dashboard'
+import chatRoutes from './routes/chat'
+import roadmapRoutes from './routes/roadmap'
+import settingsRoutes from './routes/settings'
+
 dotenv.config()
 
 const app = express()
@@ -49,7 +57,12 @@ app.get('/test-db', async (req, res) => {
 })
 
 // Routes
-
+app.use('/api/auth', authRoutes)
+app.use('/api/ideas', ideaRoutes)
+app.use('/api/dashboard', dashboardRoutes)
+app.use('/api/chat', chatRoutes)
+app.use('/api/roadmap', roadmapRoutes)
+app.use('/api/settings', settingsRoutes)
 
 // Error handling
 app.use(errorHandler)
