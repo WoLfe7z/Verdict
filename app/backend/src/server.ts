@@ -7,6 +7,10 @@ import { supabase } from './services/supabase'  // Import Supabase client
 
 // Routes
 import ideaRoutes from './routes/ideas'
+import dashboardRoutes from './routes/dashboard'
+import chatRoutes from './routes/chat'
+import roadmapRoutes from './routes/roadmap'
+import settingsRoutes from './routes/settings'
 
 dotenv.config()
 
@@ -53,6 +57,10 @@ app.get('/test-db', async (req, res) => {
 
 // Routes
 app.use('/api/ideas', ideaRoutes)
+app.use('/api/dashboard', dashboardRoutes)
+app.use('/api/chat', chatRoutes)
+app.use('/api/roadmap', roadmapRoutes)
+app.use('/api/settings', settingsRoutes)
 
 // Error handling
 app.use(errorHandler)
