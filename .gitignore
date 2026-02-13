@@ -1,10 +1,12 @@
 node_modules/
 .env
 .env.local
+.env.production
 dist/
 build/
 coverage/
 .DS_Store
+Thumbs.db
 
 __pycache__/
 *.pyc
@@ -12,3 +14,15 @@ __pycache__/
 .env
 .next
 
+#logs
+*.log
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Supabase
+.supabase/
