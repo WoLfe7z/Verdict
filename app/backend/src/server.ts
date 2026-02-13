@@ -6,6 +6,7 @@ import { errorHandler } from './middleware/errorHandler'
 import { supabase } from './services/supabase'  // Import Supabase client
 
 // Routes
+import authRoutes from './routes/auth'
 import ideaRoutes from './routes/ideas'
 import dashboardRoutes from './routes/dashboard'
 import chatRoutes from './routes/chat'
@@ -56,6 +57,7 @@ app.get('/test-db', async (req, res) => {
 })
 
 // Routes
+app.use('/api/auth', authRoutes)
 app.use('/api/ideas', ideaRoutes)
 app.use('/api/dashboard', dashboardRoutes)
 app.use('/api/chat', chatRoutes)
