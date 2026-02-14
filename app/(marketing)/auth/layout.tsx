@@ -6,8 +6,10 @@ export default function AuthLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="max-w-[1200px] mx-auto">
-      {children}
+    <div className='bg-'>
+      <div className="max-w-[1200px] mx-auto">
+        {children}
+      </div>
     </div>
   )
 }

@@ -28,8 +28,8 @@ export default function Navbar() {
   }, [])
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? "bg-bg/80 backdrop-blur-md border-b border-white/10" : "bg-transparent"
+    <nav className={`text-white fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled ? "bg-[#000]/30 backdrop-blur-md border-b border-white/10" : "bg-transparent"
     }`}>
       <div className="mx-auto w-full max-w-[1200px] px-4 py-4 flex">
         
@@ -70,7 +70,7 @@ export default function Navbar() {
 
               <Link
                 href="/auth/get-started"
-                className="px-5 py-2 rounded border text-md border-white/50 hover:bg-primary bg-white/25 backdrop-blur-sm transition"
+                className="px-3 py-2 rounded border text-md border-white/50 hover:bg-black/50 bg-black/25 backdrop-blur-sm transition"
               >
                 Get started - Free
               </Link>

@@ -4,8 +4,13 @@ import { useState } from "react"
 import Link from "next/link"
 import { FcGoogle } from "react-icons/fc"
 import { FaApple } from "react-icons/fa"
+import { useRouter } from "next/navigation"
+import { supabase } from "@/lib/supabaseClient"
+
 
 export default function GetStartedPage() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,7 +29,6 @@ export default function GetStartedPage() {
     e.preventDefault()
     setError("")
 
-    // Validation
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match")
       return
@@ -38,19 +42,30 @@ export default function GetStartedPage() {
     setIsLoading(true)
 
     try {
-      // TODO: Add signup API call
-      console.log("Signup attempt:", {
-        name: formData.name,
+      const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
+        options: {
+          data: {
+            full_name: formData.name,
+          },
+        },
       })
-    } catch (err) {
-      setError("Failed to create account. Please try again.")
-      console.error("Signup error:", err)
+
+      if (error) {
+        throw error
+      }
+
+      // Če uporabljaš trigger za profiles, se profil ustvari avtomatsko
+
+      router.push("/projects")
+    } catch (err: any) {
+      setError(err.message || "Failed to create account.")
     } finally {
       setIsLoading(false)
     }
   }
+
 
   const handleOAuthSignup = (provider: string) => {
     console.log(`Sign up with ${provider}`)
@@ -148,7 +163,7 @@ export default function GetStartedPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 rounded-lg bg-primary text-white font-semibold hover:bg-purple-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full bg-[#7C5CFF] hover:bg-[#7C5CFF]/80 py-3 rounded-lg text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {isLoading ? "Creating Account..." : "Create Account"}
           </button>

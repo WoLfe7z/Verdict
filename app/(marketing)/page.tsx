@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link"
 import { useState } from "react"
 import { IoMdArrowUp } from "react-icons/io";
@@ -43,7 +44,7 @@ export default function Home() {
             Get a clear AI verdict on your startup idea — and a structured path forward.
           </p>
 
-          <div className="h-64 border border-white/50 rounded-lg p-4 pb-5 bg-[#0f0f0f]/25 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 backdrop-saturate-100 backdrop-contrast-125 font-primary transition-colors duration-200">
+          <div className="h-64 rounded-lg border border-white/50 p-4 pb-5 bg-[#0f0f0f]/25 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 backdrop-saturate-100 backdrop-contrast-125 font-primary transition-colors duration-200">
             <textarea
               placeholder="Example: “A marketplace…”"
               value={input}

@@ -121,14 +121,14 @@ export default function FeaturesSection() {
                                             {`Step ${index + 1}`}
                                         </TextAnimate>
 
-                                        <h3
+                                        <TextAnimate
                                             className={`text-4xl font-bold transition-all duration-500 ${index === activeStep
                                                     ? "text-white"
                                                     : "text-white/70"
                                                 }`}
                                         >
                                             {step.title}
-                                        </h3>
+                                        </TextAnimate>
                                     </div>
                                 ))}
                             </div>
