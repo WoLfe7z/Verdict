@@ -2,12 +2,13 @@
 import { motion } from "motion/react"
 import React, { useState } from 'react'
 import Image from "next/image"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 
+import { supabase } from '@/lib/supabaseClient'
 import Chat from '@/components/idea/chat'
 import Overview from '@/components/idea/overview'
-
+import Avatar from '@mui/material/Avatar';
 
 // Icons
 import { CiMoneyCheck1 } from "react-icons/ci";
@@ -20,6 +21,12 @@ import { HiOutlineSlash } from "react-icons/hi2";
 
 export default function Page() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const router = useRouter()
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    router.push("/auth/login")
+  }
 
   const pathname = usePathname()
   const [isExpanded, setIsExpanded] = useState(false)
@@ -48,7 +55,7 @@ export default function Page() {
 
   return (
     <div className="font-primary">
-      <nav className='fixed z-10 flex items-center w-[100%] px-3 bg-[#141414]/80 text-white border-b border-white/10'>
+      <nav className='fixed z-10 flex items-center w-[100%] px-3 bg-[#141414] text-white border-b border-white/10'>
         {/* <div className='flex justify-center w-12 border-r border-white/10'>
           <Image src="/logo2.png" alt="logo" width={30} height={30} />
         </div> */}
@@ -70,15 +77,7 @@ export default function Page() {
                 <p className='text-sm font-semibold'>Lan Kuhar</p>
                 <p className='text-xs text-gray-400'>Administrator</p>
               </div>
-              <div className='flex justify-center items-center bg-white w-10 h-10 rounded-full overflow-hidden'>
-                <Image
-                  src="/profile.jpg"
-                  alt="profile"
-                  width={35}
-                  height={35}
-                  className='w-full h-full rounded-full'
-                />
-              </div>
+              <Avatar alt="Eucharia Odili" src="/profile.jpg" sx={{ width: 30, height: 30 }} />
             </button>
 
             {/* Dropdown Menu */}
@@ -117,7 +116,7 @@ export default function Page() {
 
                 <div className='mx-auto w-[90%] h-px bg-white/10 my-2'></div>
 
-                <button className='w-full my-1 px-4 py-2 rounded-[5px] hover:bg-white/5 text-left text-sm flex items-center transition text-red-400'>
+                <button onClick={handleLogout} className='w-full my-1 px-4 py-2 rounded-[5px] hover:bg-white/5 text-left text-sm flex items-center transition text-red-400'>
                   Log out
                 </button>
               </motion.div>
@@ -132,7 +131,7 @@ export default function Page() {
       >
 
         {/* LEFT SLIM RAIL */}
-        <div className="relative w-12 bg-[#141414]/80 flex flex-col items-center pl-2 py-4 gap-2">
+        <div className="relative w-12 bg-[#141414] flex flex-col items-center pl-2 py-4 gap-2">
           <div className="flex w-full flex-col gap-2">
             {navItems.map((item, idx) => {
               const isActive = pathname.startsWith(item.href)
@@ -176,7 +175,7 @@ export default function Page() {
         <motion.div
           initial={false}
           animate={{ width: isExpanded ? 120 : 0 }}
-          className="overflow-hidden bg-[#141414]/80 flex flex-col py-4 gap-4 border-r border-white/10"
+          className="overflow-hidden bg-[#141414] flex flex-col py-4 gap-4 border-r border-white/10"
         >
           <div className="w-[120px] pr-2 flex flex-col h-full">
             <nav className="flex flex-col items-start gap-2">
@@ -221,13 +220,27 @@ export default function Page() {
           </div>
         </motion.div>
       </div>
-      <div className="pl-12 pt-14 text-white bg-[url(/bg.png)] w-full h-screen bg-cover bg-bottom bg-no-repeat">
-        <div className="mx-auto w-full h-full p-20">
-          <div className="flex w-full h-full gap-5">
-            <div className='w-2/3 h-1/2'>
-              <Overview/>
-            </div>
-            <Chat/>
+      <div className="fixed pl-12 pt-14 text-white w-full h-screen bg-cover bg-bottom bg-no-repeat">
+        <div className="mx-auto w-full h-full p-20 pb-20 overflow-y-auto">
+          <div className="flex w-[1500px] mx-auto">
+              <div className="w-2/3">
+                <div className="flex justify-between items-end">
+                  <div>
+                    <h1 className="text-4xl font-bold text-white/80">Idea Overview</h1>
+                    <h1 className="text-xl text-white/50">Marketplace for Freelance Marketers</h1>
+                  </div>
+                  <span className="text-xs font-light text-white/50 mt-4">Last updated: 16.02.2026</span>
+                </div>
+                {/* <h1 className="text-xs text-white/50 mt-4">Last updated: 16.02.2026</h1> */}
+                <div className="w-full h-[1px] bg-white/20 my-4"></div>
+                
+                <div className="space-y-4">
+                  <Overview />
+                </div>
+              </div>
+              <div className="w-1/3 pl-10">
+                <Chat />
+              </div>
           </div>
         </div>
       </div>

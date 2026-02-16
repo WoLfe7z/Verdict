@@ -2,8 +2,9 @@ import React from 'react'
 
 function chat() {
   return (
-    <div className='w-1/3 h-full bg-[#252525]/80 rounded-[10px] border-[1px] border-white/30 font-primary flex flex-col'>
+    <div className='w-[450px] min-w-[400px] h-full bg-[#252525]/80 rounded-[10px] border-[1px] border-white/30 font-primary flex flex-col'>
       {/* Top chat */}
+      <h1>Popravi dizajn!</h1>
       <div className='w-full bg-white/10 rounded-t-[10px] p-2 text-center'>
         Chat
       </div>
