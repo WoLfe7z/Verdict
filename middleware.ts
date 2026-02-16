@@ -2,8 +2,10 @@ import { createServerClient } from "@supabase/ssr"
 import { NextResponse, type NextRequest } from "next/server"
 
 export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({
-    request,
+  const response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
   })
 
   const supabase = createServerClient(
@@ -30,7 +32,7 @@ export async function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname
 
-  const isDashboardRoute = pathname.startsWith("/projects")
+  const isDashboardRoute = pathname.startsWith("/projects") || pathname.startsWith("/idea")
   const isAuthRoute = pathname.startsWith("/auth")
 
   if (!user && isDashboardRoute) {
@@ -45,5 +47,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/projects/:path*", "/auth/:path*"],
+  matcher: ["/projects/:path*", "/idea/:path*", "/auth/:path*"],
 }

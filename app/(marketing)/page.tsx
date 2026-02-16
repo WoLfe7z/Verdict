@@ -44,7 +44,7 @@ export default function Home() {
             Get a clear AI verdict on your startup idea — and a structured path forward.
           </p>
 
-          <div className="h-64 rounded-lg border border-white/50 p-4 pb-5 bg-[#0f0f0f]/25 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 backdrop-saturate-100 backdrop-contrast-125 font-primary transition-colors duration-200">
+          <div className="h-64 rounded-[10px] border border-white/50 p-4 pb-5 bg-[#0f0f0f]/25 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 backdrop-saturate-100 backdrop-contrast-125 font-primary transition-colors duration-200">
             <textarea
               placeholder="Example: “A marketplace…”"
               value={input}
@@ -146,13 +146,13 @@ export default function Home() {
               <span className="text-white text-lg">verdict@help.com</span>
             </Link>
 
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6 text-white">
               <Link href="/features" className="hover:text-white/60 text-sm transition-colors duration-200">Features</Link>
               <Link href="/contact" className="hover:text-white/60 text-sm transition-colors duration-200">How it works</Link>
               <Link href="/about" className="hover:text-white/60 text-sm transition-colors duration-200">About</Link>
             </div>
           </div>
-          <h2 className="font-headers font-bold text-[20rem]">Verdict</h2>
+          <h2 className="font-headers text-white font-bold text-[20rem]">Verdict</h2>
           <div className="pb-5">
             <p className="text-white text-sm">
               &copy; 2026 Verdict. All rights reserved.
