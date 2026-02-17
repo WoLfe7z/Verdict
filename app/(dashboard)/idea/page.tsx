@@ -17,6 +17,7 @@ import { IoAnalytics } from "react-icons/io5";
 
 import { RxDashboard } from "react-icons/rx";
 import { HiOutlineSlash } from "react-icons/hi2";
+import Navigation from "@/components/idea/navigation"
 
 
 export default function Page() {
@@ -127,7 +128,7 @@ export default function Page() {
       <div
         onMouseEnter={() => setIsExpanded(true)}
         onMouseLeave={() => setIsExpanded(false)}
-        className="fixed pt-14 h-screen z-0 flex"
+        className="fixed pt-14 h-screen z-10 flex"
       >
 
         {/* LEFT SLIM RAIL */}
@@ -220,25 +221,28 @@ export default function Page() {
           </div>
         </motion.div>
       </div>
-      <div className="fixed pl-12 pt-14 text-white w-full h-screen bg-cover bg-bottom bg-no-repeat">
-        <div className="mx-auto w-full h-full p-20 pb-20 overflow-y-auto">
-          <div className="flex w-[1500px] mx-auto">
-              <div className="w-2/3">
-                <div className="flex justify-between items-end">
+      <div className="fixed z-0 pl-12 pt-14 text-white w-full h-screen bg-cover bg-bottom bg-no-repeat">
+        <div className="mx-auto w-full h-full overflow-y-auto">
+          <div className="flex flex-col xl:flex-row w-full p-6 sm:p-10 lg:p-10 pb-20 gap-6 xl:gap-0">
+              <div className="w-3/20 h-full">
+                <Navigation/>
+              </div>
+              <div className="w-full xl:w-12/20">
+                <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-2">
                   <div>
-                    <h1 className="text-4xl font-bold text-white/80">Idea Overview</h1>
-                    <h1 className="text-xl text-white/50">Marketplace for Freelance Marketers</h1>
+                    <h1 className="text-2xl sm:text-4xl font-bold text-white/80">Idea Overview</h1>
+                    <h1 className="text-lg sm:text-xl text-white/50">Marketplace for Freelance Marketers</h1>
                   </div>
                   <span className="text-xs font-light text-white/50 mt-4">Last updated: 16.02.2026</span>
                 </div>
                 {/* <h1 className="text-xs text-white/50 mt-4">Last updated: 16.02.2026</h1> */}
                 <div className="w-full h-[1px] bg-white/20 my-4"></div>
-                
+
                 <div className="space-y-4">
                   <Overview />
                 </div>
               </div>
-              <div className="w-1/3 pl-10">
+              <div className="w-full xl:w-5/20 xl:pl-10 xl:sticky xl:top-20 self-start">
                 <Chat />
               </div>
           </div>
