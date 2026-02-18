@@ -58,7 +58,7 @@ export default function ScrollStepsSection() {
             {steps[activeStep].title}
           </h2>
 
-          <p className="text-white/60 text-lg">
+          <p className="text-white/70 text-lg">
             {steps[activeStep].description}
           </p>
         </div>
@@ -85,7 +85,7 @@ export default function ScrollStepsSection() {
                     className={`text-sm ${
                       index === activeStep
                         ? "text-purple-500"
-                        : "text-white/40"
+                        : "text-white/50"
                     }`}
                   >
                     Step {index + 1}
@@ -95,7 +95,7 @@ export default function ScrollStepsSection() {
                     className={`text-lg ${
                       index === activeStep
                         ? "text-white"
-                        : "text-white/60"
+                        : "text-white/70"
                     }`}
                   >
                     {step.title}

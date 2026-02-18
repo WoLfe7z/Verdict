@@ -45,16 +45,16 @@ export default function Navbar() {
           <>
             <div className="w-6/12 flex justify-center">
               <div className="hidden sm:flex font-medium items-center gap-10">
-                <Link href="/features" className="hover:text-white/60 transition">
+                <Link href="/features" className="hover:text-white/70 transition">
                   Features
                 </Link>
-                <Link href="/how-it-works" className="hover:text-white/60 transition">
+                <Link href="/how-it-works" className="hover:text-white/70 transition">
                   How it works
                 </Link>
-                <Link href="/about" className="hover:text-white/60 transition">
+                <Link href="/about" className="hover:text-white/70 transition">
                   About
                 </Link>
-                <Link href="/about" className="hover:text-white/60 transition">
+                <Link href="/about" className="hover:text-white/70 transition">
                   Pricing
                 </Link>
               </div>
@@ -63,7 +63,7 @@ export default function Navbar() {
             <div className="w-3/12 flex items-center justify-end gap-3">
               <Link 
                 href="/auth/login"
-                className="hover:text-white/60 px-4 py-2 transition"
+                className="hover:text-white/70 px-4 py-2 transition"
               >
                 Login
               </Link>

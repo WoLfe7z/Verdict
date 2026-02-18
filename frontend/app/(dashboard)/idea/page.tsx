@@ -66,7 +66,7 @@ export default function Page() {
           {/* <h1 className='ml-2 text-md flex items-center gap-2'><CiMap size={20} /> Projects</h1> */}
           <div className="absolute top-0 text-center w-full h-full z-0">
             <div className="w-full h-full flex justify-center items-center">
-              <p className="text-sm flex items-center"><Link href="/projects" className="text-white/50 flex items-center underline">Projects <HiOutlineSlash  className="mx-2"/></Link> [ idea name ]</p>
+              <p className="text-sm flex items-center"><Link href="/projects" className="text-white/65 flex items-center underline">Projects <HiOutlineSlash  className="mx-2"/></Link> [ idea name ]</p>
             </div>
           </div>
           <div className='ml-auto relative z-10'>
@@ -86,7 +86,7 @@ export default function Page() {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className='absolute right-0 mt-2 w-64 bg-[#1a1a1a]/80 rounded-[10px] p-2 shadow-lg z-50'>
+                className='absolute right-0 mt-2 w-64 bg-[#1a1a1a] rounded-[10px] p-2 shadow-lg z-50'>
                 <div className='px-4 py-3'>
                   <p className='text-sm font-semibold'>Eucharia</p>
                   <p className='text-xs text-gray-400'>odilieucharia@gmail.com</p>
@@ -142,7 +142,7 @@ export default function Page() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`w-full flex items-center justify-center rounded-l-[5px] transition ${isActive ? "text-white" : "text-white/50 hover:text-white"} ${isHovered ? "bg-white/5 text-white" : ""}`}
+                  className={`w-full flex items-center justify-center rounded-l-[5px] transition ${isActive ? "text-white" : "text-white/65 hover:text-white"} ${isHovered ? "bg-white/5 text-white" : ""}`}
                   onMouseEnter={() => setHoveredIndex(idx)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
@@ -190,7 +190,7 @@ export default function Page() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className={`h-10 w-full flex rounded-r-[5px] items-center px-3 transition ${isActive ? "text-white" : "text-white/50 hover:text-white"} ${isHovered ? "bg-white/5 text-white" : ""}`}
+                    className={`h-10 w-full flex rounded-r-[5px] items-center px-3 transition ${isActive ? "text-white" : "text-white/65 hover:text-white"} ${isHovered ? "bg-white/5 text-white" : ""}`}
                     onMouseEnter={() => setHoveredIndex(idx)}
                     onMouseLeave={() => setHoveredIndex(null)}
                   >
@@ -209,7 +209,7 @@ export default function Page() {
                 return (
                   <Link
                     href={settingsItem.href}
-                    className={`h-10 w-full flex rounded-r-[5px] items-center px-3 transition ${isActive ? "text-white" : "text-white/50 hover:text-white"} ${isHovered ? "bg-white/5 text-white" : ""}`}
+                    className={`h-10 w-full flex rounded-r-[5px] items-center px-3 transition ${isActive ? "text-white" : "text-white/65 hover:text-white"} ${isHovered ? "bg-white/5 text-white" : ""}`}
                     onMouseEnter={() => setHoveredIndex(settingsIdx)}
                     onMouseLeave={() => setHoveredIndex(null)}
                   >
@@ -230,12 +230,12 @@ export default function Page() {
               <div className="w-full xl:w-12/20">
                 <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-2">
                   <div>
-                    <h1 className="text-2xl sm:text-4xl font-bold text-white/80">Idea Overview</h1>
-                    <h1 className="text-lg sm:text-xl text-white/50">Marketplace for Freelance Marketers</h1>
+                    <h1 className="text-2xl sm:text-4xl font-bold text-white/90">Idea Overview</h1>
+                    <h1 className="text-lg sm:text-xl text-white/65">Marketplace for Freelance Marketers</h1>
                   </div>
-                  <span className="text-xs font-light text-white/50 mt-4">Last updated: 16.02.2026</span>
+                  <span className="text-xs font-light text-white/65 mt-4">Last updated: 16.02.2026</span>
                 </div>
-                {/* <h1 className="text-xs text-white/50 mt-4">Last updated: 16.02.2026</h1> */}
+                {/* <h1 className="text-xs text-white/65 mt-4">Last updated: 16.02.2026</h1> */}
                 <div className="w-full h-[1px] bg-white/20 my-4"></div>
 
                 <div className="space-y-4">

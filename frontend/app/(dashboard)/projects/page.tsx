@@ -158,7 +158,7 @@ export default function Page() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`w-full flex items-center justify-center rounded-l-[5px] transition ${isActive ? "text-white" : "text-white/50 hover:text-white"} ${isHovered ? "bg-white/5 text-white" : ""}`}
+                  className={`w-full flex items-center justify-center rounded-l-[5px] transition ${isActive ? "text-white" : "text-white/65 hover:text-white"} ${isHovered ? "bg-white/5 text-white" : ""}`}
                   onMouseEnter={() => setHoveredIndex(idx)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
@@ -177,7 +177,7 @@ export default function Page() {
               return (
                 <Link
                   href={settingsItem.href}
-                  className={`w-full flex items-center justify-center rounded-l-[5px] transition ${isActive ? "text-white" : "text-white/50 hover:text-white"} ${isHovered ? "bg-white/5 text-white" : ""}`}
+                  className={`w-full flex items-center justify-center rounded-l-[5px] transition ${isActive ? "text-white" : "text-white/65 hover:text-white"} ${isHovered ? "bg-white/5 text-white" : ""}`}
                   onMouseEnter={() => setHoveredIndex(settingsIdx)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
@@ -206,7 +206,7 @@ export default function Page() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className={`h-10 w-full flex rounded-r-[5px] items-center px-3 transition ${isActive ? "text-white" : "text-white/50 hover:text-white"} ${isHovered ? "bg-white/5 text-white" : ""}`}
+                    className={`h-10 w-full flex rounded-r-[5px] items-center px-3 transition ${isActive ? "text-white" : "text-white/65 hover:text-white"} ${isHovered ? "bg-white/5 text-white" : ""}`}
                     onMouseEnter={() => setHoveredIndex(idx)}
                     onMouseLeave={() => setHoveredIndex(null)}
                   >
@@ -225,7 +225,7 @@ export default function Page() {
                 return (
                   <Link
                     href={settingsItem.href}
-                    className={`h-10 w-full flex rounded-r-[5px] items-center px-3 transition ${isActive ? "text-white" : "text-white/50 hover:text-white"} ${isHovered ? "bg-white/5 text-white" : ""}`}
+                    className={`h-10 w-full flex rounded-r-[5px] items-center px-3 transition ${isActive ? "text-white" : "text-white/65 hover:text-white"} ${isHovered ? "bg-white/5 text-white" : ""}`}
                     onMouseEnter={() => setHoveredIndex(settingsIdx)}
                     onMouseLeave={() => setHoveredIndex(null)}
                   >
@@ -249,18 +249,18 @@ export default function Page() {
           <div className="w-full h-[1px] bg-white/10 my-3"></div>
           <div className="w-full h-full">
             <div className="w-full">
-              <p className="text-sm text-white/50 mb-4">Projects are containers for your work. You can have multiple projects to organize different applications, experiments, or ideas. Each project can have its own settings, resources, and team members.</p>
+              <p className="text-sm text-white/65 mb-4">Projects are containers for your work. You can have multiple projects to organize different applications, experiments, or ideas. Each project can have its own settings, resources, and team members.</p>
               <div className="flex justify-between items-center w-full mb-5">
                 <div className="flex w-1/3">
                   <div className="relative w-full">
-                    <IoSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-white/40" size={18} />
+                    <IoSearch className="absolute left-2 top-1/2 -translate-y-1/2 text-white/50" size={18} />
                     <Input type="text" placeholder="Search ideas..." className="pl-8 pr-2 py-1" />
                   </div>
                 </div>
               </div>
             </div>
             <div className="hidden w-full h-64 items-center justify-center">
-              <p className="text-sm text-white/50">{"You don't have any projects yet. Click 'New Project' to create your first one."}</p>
+              <p className="text-sm text-white/65">{"You don't have any projects yet. Click 'New Project' to create your first one."}</p>
             </div>
             <div className="grid grid-cols-3 gap-x-5 gap-y-5 justify-between w-full">
               {/* Map through projects here */}
@@ -290,7 +290,7 @@ export default function Page() {
                     )}
                   </div>
                 </div>
-                <p className="text-sm text-white/50 mb-4 max-w-[calc(100%-3rem)]">A platform connecting students with expert tutors worldwide.</p>
+                <p className="text-sm text-white/65 mb-4 max-w-[calc(100%-3rem)]">A platform connecting students with expert tutors worldwide.</p>
                 <p className="text-xs text-[#7C5CFF] font-semibold bg-[#7C5CFF]/10 w-fit px-2 py-1 rounded-[5px] border border-[#7C5CFF]/20">
                   Active
                 </p>
@@ -311,14 +311,14 @@ export default function Page() {
             <h2 className="text-lg font-semibold mb-4">New Idea</h2>
             <form onSubmit={(e) => { e.preventDefault(); setIsNewIdeaOpen(false); }}>
               <div className="mb-4">
-                <label className="block text-sm text-white/60 mb-1">Name</label>
+                <label className="block text-sm text-white/70 mb-1">Name</label>
                 <Input
                   type="text"
                   placeholder="Enter idea name..."
                 />
               </div>
               <div className="mb-6">
-                <label className="block text-sm text-white/60 mb-1">Enter your idea</label>
+                <label className="block text-sm text-white/70 mb-1">Enter your idea</label>
                 <div className="relative bg-[#252525] border border-white/10 rounded-[5px] focus-within:ring-1 focus-within:ring-white/30">
                   <textarea
                     value={ideaText}
@@ -328,7 +328,7 @@ export default function Page() {
                     className="w-full px-3 py-2 bg-transparent text-sm outline-none resize-none"
                   />
                   <div className="flex items-center justify-between px-3 py-2 border-t border-white/10">
-                    <p className="text-xs text-white/40">{ideaText.length >= 200 ? "Max 500" : "Min 200"}</p>
+                    <p className="text-xs text-white/50">{ideaText.length >= 200 ? "Max 500" : "Min 200"}</p>
                     <div className="flex items-center gap-2">
                       <div className="w-60 h-1 bg-white/10 rounded-full overflow-hidden">
                         <div

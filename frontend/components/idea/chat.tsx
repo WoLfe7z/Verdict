@@ -31,10 +31,10 @@ function Chat() {
       {/* Header */}
       <div className='w-full px-4 py-3 border-b border-white/8 bg-white/3 rounded-t-[5px] flex items-center justify-between'>
         <div className='flex items-center gap-2.5'>
-          <h1 className='text-sm font-medium text-white/70 tracking-wide'>Strategic Advisor</h1>
-          <span className='text-[9px] text-white/20 uppercase tracking-widest font-medium'>Context-Aware</span>
+          <h1 className='text-sm font-medium text-white/80 tracking-wide'>Strategic Advisor</h1>
+          <span className='text-[9px] text-white/35 uppercase tracking-widest font-medium'>Context-Aware</span>
         </div>
-        <BsThreeDots className='text-white/30 hover:text-white/50 cursor-pointer transition-colors' />
+        <BsThreeDots className='text-white/40 hover:text-white/65 cursor-pointer transition-colors' />
       </div>
 
       {/* Conversation Area */}
@@ -48,22 +48,22 @@ function Chat() {
         <div className='space-y-3'>
           {/* System message */}
           <div className='border-l-2 border-white/8 pl-3'>
-            <p className='text-[10px] text-white/20 uppercase tracking-widest font-medium mb-1.5'>Advisory System</p>
-            <p className='text-sm text-white/50 leading-relaxed'>
+            <p className='text-[10px] text-white/35 uppercase tracking-widest font-medium mb-1.5'>Advisory System</p>
+            <p className='text-sm text-white/65 leading-relaxed'>
               Strategic analysis loaded. Select a query below or describe a specific area to investigate.
             </p>
           </div>
 
           {/* Structured Query Prompts */}
           <div className='space-y-1.5 mt-3'>
-            <p className='text-[9px] text-white/15 uppercase tracking-widest font-medium px-1 mb-2'>Suggested Queries</p>
+            <p className='text-[9px] text-white/30 uppercase tracking-widest font-medium px-1 mb-2'>Suggested Queries</p>
             {[
-              { icon: <LuTarget className='text-white/25 text-xs' />, label: 'Refine Market Positioning', context: 'Differentiation: 4.5' },
-              { icon: <LuDollarSign className='text-white/25 text-xs' />, label: 'Stress-Test Monetization Logic', context: 'Monetization: 7.0' },
-              { icon: <LuShield className='text-white/25 text-xs' />, label: 'Simulate Competitive Pressure', context: 'Risk: Moderate' },
-              { icon: <LuTrendingUp className='text-white/25 text-xs' />, label: 'Evaluate Scalability Constraints', context: 'Scalability: 7.5' },
-              { icon: <LuUsers className='text-white/25 text-xs' />, label: 'Sharpen ICP Definition', context: 'Clarity: 6.5' },
-              { icon: <LuSearch className='text-white/25 text-xs' />, label: 'Identify Validation Gaps', context: 'Stage: Pre-validation' },
+              { icon: <LuTarget className='text-white/40 text-xs' />, label: 'Refine Market Positioning', context: 'Differentiation: 4.5' },
+              { icon: <LuDollarSign className='text-white/40 text-xs' />, label: 'Stress-Test Monetization Logic', context: 'Monetization: 7.0' },
+              { icon: <LuShield className='text-white/40 text-xs' />, label: 'Simulate Competitive Pressure', context: 'Risk: Moderate' },
+              { icon: <LuTrendingUp className='text-white/40 text-xs' />, label: 'Evaluate Scalability Constraints', context: 'Scalability: 7.5' },
+              { icon: <LuUsers className='text-white/40 text-xs' />, label: 'Sharpen ICP Definition', context: 'Clarity: 6.5' },
+              { icon: <LuSearch className='text-white/40 text-xs' />, label: 'Identify Validation Gaps', context: 'Stage: Pre-validation' },
             ].map((query) => (
               <button
                 key={query.label}
@@ -73,9 +73,9 @@ function Chat() {
                   {query.icon}
                 </div>
                 <div className='flex-1 min-w-0'>
-                  <p className='text-xs text-white/50 group-hover:text-white/65 transition-colors'>{query.label}</p>
+                  <p className='text-xs text-white/65 group-hover:text-white/75 transition-colors'>{query.label}</p>
                 </div>
-                <span className='text-[9px] text-white/15 shrink-0'>{query.context}</span>
+                <span className='text-[9px] text-white/30 shrink-0'>{query.context}</span>
               </button>
             ))}
           </div>
@@ -84,15 +84,15 @@ function Chat() {
         {/* Example: User Query */}
         <div className='flex justify-end'>
           <div className='max-w-[80%] border-l-2 border-[#7C5CFF]/30 pl-3 py-1'>
-            <p className='text-[9px] text-white/20 uppercase tracking-widest font-medium mb-1'>Query</p>
-            <p className='text-sm text-white/60'>Refine Market Positioning</p>
+            <p className='text-[9px] text-white/35 uppercase tracking-widest font-medium mb-1'>Query</p>
+            <p className='text-sm text-white/70'>Refine Market Positioning</p>
           </div>
         </div>
 
         {/* Example: System Response */}
         {/* <div className='border-l-2 border-white/8 pl-3'>
-          <p className='text-[10px] text-white/20 uppercase tracking-widest font-medium mb-1.5'>Analysis</p>
-          <p className='text-sm text-white/50 leading-relaxed'>
+          <p className='text-[10px] text-white/35 uppercase tracking-widest font-medium mb-1.5'>Analysis</p>
+          <p className='text-sm text-white/65 leading-relaxed'>
             Current differentiation score (4.5) is below defensibility threshold...
           </p>
         </div> */}
@@ -113,19 +113,19 @@ function Chat() {
             [&::-webkit-scrollbar-track]:bg-transparent
             [&::-webkit-scrollbar-thumb]:bg-white/10
             [&::-webkit-scrollbar-thumb]:rounded-full
-            text-white/60 text-sm px-3.5 pt-3 pb-1 outline-none placeholder-white/25 resize-none max-h-37.5'
+            text-white/70 text-sm px-3.5 pt-3 pb-1 outline-none placeholder-white/40 resize-none max-h-37.5'
           />
           <div className='flex items-center justify-between px-3 pb-2'>
-            <button className='text-white/20 hover:text-white/40 transition-colors'>
+            <button className='text-white/35 hover:text-white/50 transition-colors'>
               <GoPlus size={18} />
             </button>
-            <button className='bg-white/8 hover:bg-white/12 text-white/40 hover:text-white/60 rounded-lg p-1.5 transition-colors cursor-pointer'>
+            <button className='bg-white/8 hover:bg-white/12 text-white/50 hover:text-white/70 rounded-lg p-1.5 transition-colors cursor-pointer'>
               <IoIosSend size={14} />
             </button>
           </div>
         </div>
         <div className='flex items-center justify-between mt-2 px-1'>
-          <span className='text-[9px] text-white/12'>Context: 6 metrics, 3 risk drivers, Pre-validation stage</span>
+          <span className='text-[9px] text-white/25'>Context: 6 metrics, 3 risk drivers, Pre-validation stage</span>
         </div>
       </div>
     </div>

@@ -115,7 +115,7 @@ export default function FeaturesSection() {
                                         <TextAnimate
                                             className={`text-base font-semibold mb-2 transition-all duration-500 ${index === activeStep
                                                     ? "text-purple-500"
-                                                    : "text-white/40"
+                                                    : "text-white/50"
                                                 }`}
                                         >
                                             {`Step ${index + 1}`}
@@ -124,7 +124,7 @@ export default function FeaturesSection() {
                                         <TextAnimate
                                             className={`text-4xl font-bold transition-all duration-500 ${index === activeStep
                                                     ? "text-white"
-                                                    : "text-white/70"
+                                                    : "text-white/80"
                                                 }`}
                                         >
                                             {step.title}

@@ -580,10 +580,10 @@ function overview() {
         {/* Section Header */}
         <div className='w-full px-5 py-3 border-b border-white/8 bg-white/3 rounded-t-md flex items-center justify-between'>
           <div className='flex items-center gap-3'>
-            <h1 className='text-base font-medium text-white/80 tracking-wide'>Executive Strategic Summary</h1>
-            <span className='text-[10px] text-white/25 uppercase tracking-widest font-medium'>Investment Memo</span>
+            <h1 className='text-base font-medium text-white/90 tracking-wide'>Executive Strategic Summary</h1>
+            <span className='text-[10px] text-white/40 uppercase tracking-widest font-medium'>Investment Memo</span>
           </div>
-          <BsThreeDots className='text-white/30 hover:text-white/50 cursor-pointer transition-colors' />
+          <BsThreeDots className='text-white/40 hover:text-white/65 cursor-pointer transition-colors' />
         </div>
 
         {/* ─── Tier 1: Primary Indicators ─── */}
@@ -591,8 +591,8 @@ function overview() {
 
           {/* Opportunity Score — Primary KPI */}
           <div className='lg:col-span-3 border-b lg:border-b-0 lg:border-r border-white/8 px-6 py-7 flex flex-col items-center justify-center'>
-            <p className='text-[11px] text-white/30 uppercase tracking-widest font-medium mb-0.5'>Opportunity Score</p>
-            <p className='text-[10px] text-white/20 mb-4'>Investment Signal</p>
+            <p className='text-[11px] text-white/40 uppercase tracking-widest font-medium mb-0.5'>Opportunity Score</p>
+            <p className='text-[10px] text-white/35 mb-4'>Investment Signal</p>
             <div className='relative'>
               <svg width={140} height={90} viewBox="0 0 200 110">
                 <path
@@ -611,10 +611,10 @@ function overview() {
                 />
               </svg>
               <div className='absolute inset-0 flex items-end justify-center pb-0.5'>
-                <span className='text-3xl font-semibold text-white/85 tabular-nums'>{score}</span>
+                <span className='text-3xl font-semibold text-white/90 tabular-nums'>{score}</span>
               </div>
             </div>
-            <p className='text-[10px] text-white/20 mt-2'>0–100 Composite</p>
+            <p className='text-[10px] text-white/35 mt-2'>0–100 Composite</p>
           </div>
 
           {/* ─── Tier 2: Status Indicators + Confidence ─── */}
@@ -624,21 +624,21 @@ function overview() {
             <div className='grid grid-cols-1 sm:grid-cols-3 border-b border-white/8'>
               {/* Strategic Status */}
               <div className='px-6 py-5 border-b sm:border-b-0 sm:border-r border-white/8'>
-                <p className='text-[10px] text-white/25 uppercase tracking-widest font-medium mb-2.5'>Strategic Status</p>
+                <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium mb-2.5'>Strategic Status</p>
                 <span className='inline-flex items-center px-2.5 py-1 text-xs font-medium bg-amber-500/10 text-amber-400/80 rounded border border-amber-500/15'>
                   Validation Recommended
                 </span>
               </div>
               {/* Current Stage */}
               <div className='px-6 py-5 border-b sm:border-b-0 sm:border-r border-white/8'>
-                <p className='text-[10px] text-white/25 uppercase tracking-widest font-medium mb-2.5'>Current Stage</p>
+                <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium mb-2.5'>Current Stage</p>
                 <span className='inline-flex items-center px-2.5 py-1 text-xs font-medium bg-blue-500/10 text-blue-400/70 rounded border border-blue-500/15'>
                   Pre-validation
                 </span>
               </div>
               {/* Overall Risk Level */}
               <div className='px-6 py-5'>
-                <p className='text-[10px] text-white/25 uppercase tracking-widest font-medium mb-2.5'>Overall Risk Level</p>
+                <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium mb-2.5'>Overall Risk Level</p>
                 <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded border ${
                   riskAnalysis.overallRisk === 'High' ? 'bg-red-500/10 text-red-400/80 border-red-500/15' :
                   riskAnalysis.overallRisk === 'Elevated' ? 'bg-orange-500/10 text-orange-400/80 border-orange-500/15' :
@@ -654,8 +654,8 @@ function overview() {
             {/* Confidence Index — Secondary KPI, horizontal layout */}
             <div className='px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6'>
               <div className='shrink-0'>
-                <p className='text-[10px] text-white/25 uppercase tracking-widest font-medium mb-1'>Confidence Index</p>
-                <p className='text-[10px] text-white/15'>Model Certainty</p>
+                <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium mb-1'>Confidence Index</p>
+                <p className='text-[10px] text-white/30'>Model Certainty</p>
               </div>
               {/* Horizontal bar gauge */}
               <div className='flex-1 w-full max-w-md'>
@@ -669,11 +669,11 @@ function overview() {
                       }}
                     />
                   </div>
-                  <span className='text-lg font-semibold text-white/60 tabular-nums w-14 text-right'>72%</span>
+                  <span className='text-lg font-semibold text-white/70 tabular-nums w-14 text-right'>72%</span>
                 </div>
                 <div className='flex justify-between mt-1.5'>
-                  <span className='text-[9px] text-white/15'>Low</span>
-                  <span className='text-[9px] text-white/15'>High</span>
+                  <span className='text-[9px] text-white/30'>Low</span>
+                  <span className='text-[9px] text-white/30'>High</span>
                 </div>
               </div>
             </div>
@@ -682,10 +682,10 @@ function overview() {
 
         {/* ─── Tier 3: Metadata Footer ─── */}
         <div className='px-5 py-2.5 border-t border-white/6 bg-white/1.5 flex flex-wrap items-center gap-x-6 gap-y-1'>
-          <span className='text-[10px] text-white/20'>Last Updated: <span className='text-white/30'>Feb 18, 2026</span></span>
-          <span className='text-[10px] text-white/20'>Model Version: <span className='text-white/30'>v2.4</span></span>
-          <span className='text-[10px] text-white/20'>Basis: <span className='text-white/30'>6 Core Metrics</span></span>
-          <span className='text-[10px] text-white/20'>Evaluation Type: <span className='text-white/30'>Automated</span></span>
+          <span className='text-[10px] text-white/35'>Last Updated: <span className='text-white/40'>Feb 18, 2026</span></span>
+          <span className='text-[10px] text-white/35'>Model Version: <span className='text-white/40'>v2.4</span></span>
+          <span className='text-[10px] text-white/35'>Basis: <span className='text-white/40'>6 Core Metrics</span></span>
+          <span className='text-[10px] text-white/35'>Evaluation Type: <span className='text-white/40'>Automated</span></span>
         </div>
       </div>
 
@@ -694,10 +694,10 @@ function overview() {
         {/* Section Header */}
         <div className='w-full px-5 py-3 border-b border-white/8 bg-white/3 rounded-t-[5px] flex items-center justify-between'>
           <div className='flex items-center gap-3'>
-            <h1 className='text-base font-medium text-white/80 tracking-wide'>Strategic Interpretation</h1>
-            <span className='text-[10px] text-white/25 uppercase tracking-widest font-medium'>Analytical Brief</span>
+            <h1 className='text-base font-medium text-white/90 tracking-wide'>Strategic Interpretation</h1>
+            <span className='text-[10px] text-white/40 uppercase tracking-widest font-medium'>Analytical Brief</span>
           </div>
-          <BsThreeDots className='text-white/30 hover:text-white/50 cursor-pointer transition-colors' />
+          <BsThreeDots className='text-white/40 hover:text-white/65 cursor-pointer transition-colors' />
         </div>
 
         {/* Signal Architecture — Structured insight blocks */}
@@ -707,56 +707,56 @@ function overview() {
           <div className='px-5 py-5 border-b md:border-b lg:border-b-0 md:border-r border-white/8'>
             <div className='flex items-center gap-2 mb-3'>
               <div className='w-1 h-3.5 rounded-full bg-emerald-500/40' />
-              <p className='text-[10px] text-white/30 uppercase tracking-widest font-medium'>Strength Signal</p>
+              <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium'>Strength Signal</p>
             </div>
-            <p className='text-sm text-white/65 leading-relaxed'>
+            <p className='text-sm text-white/75 leading-relaxed'>
               Market demand scores well above threshold, indicating validated interest in the problem space.
             </p>
-            <p className='text-[10px] text-white/20 mt-3'>Driven by Market Demand (8.5)</p>
+            <p className='text-[10px] text-white/35 mt-3'>Driven by Market Demand (8.5)</p>
           </div>
 
           {/* Signal 2: Structural Weakness */}
           <div className='px-5 py-5 border-b lg:border-b-0 lg:border-r border-white/8'>
             <div className='flex items-center gap-2 mb-3'>
               <div className='w-1 h-3.5 rounded-full bg-amber-500/40' />
-              <p className='text-[10px] text-white/30 uppercase tracking-widest font-medium'>Structural Weakness</p>
+              <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium'>Structural Weakness</p>
             </div>
-            <p className='text-sm text-white/65 leading-relaxed'>
+            <p className='text-sm text-white/75 leading-relaxed'>
               Differentiation remains below defensibility threshold. Competitive positioning lacks a durable moat.
             </p>
-            <p className='text-[10px] text-white/20 mt-3'>Driven by Differentiation (4.5)</p>
+            <p className='text-[10px] text-white/35 mt-3'>Driven by Differentiation (4.5)</p>
           </div>
 
           {/* Signal 3: Strategic Tension */}
           <div className='px-5 py-5 border-b md:border-b-0 md:border-r border-white/8'>
             <div className='flex items-center gap-2 mb-3'>
               <div className='w-1 h-3.5 rounded-full bg-white/20' />
-              <p className='text-[10px] text-white/30 uppercase tracking-widest font-medium'>Strategic Tension</p>
+              <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium'>Strategic Tension</p>
             </div>
-            <p className='text-sm text-white/65 leading-relaxed'>
+            <p className='text-sm text-white/75 leading-relaxed'>
               High demand in a space with low differentiation creates winner-take-all pressure. Speed to validation is critical.
             </p>
-            <p className='text-[10px] text-white/20 mt-3'>Demand vs. Differentiation spread</p>
+            <p className='text-[10px] text-white/35 mt-3'>Demand vs. Differentiation spread</p>
           </div>
 
           {/* Signal 4: Implication */}
           <div className='px-5 py-5'>
             <div className='flex items-center gap-2 mb-3'>
               <div className='w-1 h-3.5 rounded-full bg-blue-500/30' />
-              <p className='text-[10px] text-white/30 uppercase tracking-widest font-medium'>Implication</p>
+              <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium'>Implication</p>
             </div>
-            <p className='text-sm text-white/65 leading-relaxed'>
+            <p className='text-sm text-white/75 leading-relaxed'>
               Pre-validation stage is warranted. Prioritize competitive positioning refinement before committing development capital.
             </p>
-            <p className='text-[10px] text-white/20 mt-3'>Recommended: Position before build</p>
+            <p className='text-[10px] text-white/35 mt-3'>Recommended: Position before build</p>
           </div>
         </div>
 
         {/* Synthesis Row — One-line executive takeaway */}
         <div className='px-5 py-3 border-t border-white/6 bg-white/1.5'>
           <div className='flex items-start gap-2.5'>
-            <span className='text-[10px] text-white/25 uppercase tracking-widest font-medium shrink-0 mt-0.5'>Synthesis</span>
-            <p className='text-xs text-white/50 leading-relaxed'>
+            <span className='text-[10px] text-white/40 uppercase tracking-widest font-medium shrink-0 mt-0.5'>Synthesis</span>
+            <p className='text-xs text-white/65 leading-relaxed'>
               Viable demand signal with insufficient defensibility. The opportunity is real but unprotected — validation and positioning must precede investment escalation.
             </p>
           </div>
@@ -768,25 +768,25 @@ function overview() {
         {/* Section Header */}
         <div className='w-full px-5 py-3 border-b border-white/8 bg-white/3 rounded-t-[5px] flex items-center justify-between'>
           <div className='flex items-center gap-3'>
-            <h1 className='text-base font-medium text-white/80 tracking-wide'>Core Metric Analysis</h1>
-            <span className='text-[10px] text-white/25 uppercase tracking-widest font-medium'>Evidence Layer</span>
+            <h1 className='text-base font-medium text-white/90 tracking-wide'>Core Metric Analysis</h1>
+            <span className='text-[10px] text-white/40 uppercase tracking-widest font-medium'>Evidence Layer</span>
           </div>
-          <BsThreeDots className='text-white/30 hover:text-white/50 cursor-pointer transition-colors' />
+          <BsThreeDots className='text-white/40 hover:text-white/65 cursor-pointer transition-colors' />
         </div>
 
         {/* Column Headers — Desktop only */}
         <div className='hidden md:grid md:grid-cols-12 px-5 py-2 border-b border-white/6 bg-white/1.5'>
           <div className='col-span-1'>
-            <span className='text-[9px] text-white/20 uppercase tracking-widest'>Score</span>
+            <span className='text-[9px] text-white/35 uppercase tracking-widest'>Score</span>
           </div>
           <div className='col-span-3'>
-            <span className='text-[9px] text-white/20 uppercase tracking-widest'>Metric</span>
+            <span className='text-[9px] text-white/35 uppercase tracking-widest'>Metric</span>
           </div>
           <div className='col-span-3'>
-            <span className='text-[9px] text-white/20 uppercase tracking-widest'>Signal</span>
+            <span className='text-[9px] text-white/35 uppercase tracking-widest'>Signal</span>
           </div>
           <div className='col-span-5'>
-            <span className='text-[9px] text-white/20 uppercase tracking-widest'>Assessment</span>
+            <span className='text-[9px] text-white/35 uppercase tracking-widest'>Assessment</span>
           </div>
         </div>
 
@@ -809,17 +809,17 @@ function overview() {
                   {/* Score */}
                   <div className='col-span-1'>
                     <span className={`text-xl font-semibold tabular-nums ${
-                      isBelowThreshold ? 'text-amber-400/70' : 'text-white/50'
+                      isBelowThreshold ? 'text-amber-400/70' : 'text-white/65'
                     }`}>
                       {metric.score}
                     </span>
                   </div>
                   {/* Metric name + weight */}
                   <div className='col-span-3'>
-                    <p className={`text-sm font-medium ${isBelowThreshold ? 'text-white/70' : 'text-white/55'}`}>
+                    <p className={`text-sm font-medium ${isBelowThreshold ? 'text-white/80' : 'text-white/65'}`}>
                       {metric.label}
                     </p>
-                    <p className='text-[10px] text-white/15 mt-0.5'>Weight: {metric.weight}</p>
+                    <p className='text-[10px] text-white/30 mt-0.5'>Weight: {metric.weight}</p>
                   </div>
                   {/* Signal bar */}
                   <div className='col-span-3 pr-4'>
@@ -837,13 +837,13 @@ function overview() {
                       />
                     </div>
                     <div className='flex justify-between mt-1'>
-                      <span className='text-[8px] text-white/10'>0</span>
-                      <span className='text-[8px] text-white/10'>10</span>
+                      <span className='text-[8px] text-white/20'>0</span>
+                      <span className='text-[8px] text-white/20'>10</span>
                     </div>
                   </div>
                   {/* Assessment */}
                   <div className='col-span-5'>
-                    <p className='text-xs text-white/45 leading-relaxed'>{metric.assessment}</p>
+                    <p className='text-xs text-white/55 leading-relaxed'>{metric.assessment}</p>
                   </div>
                 </div>
 
@@ -852,15 +852,15 @@ function overview() {
                   <div className='flex items-center justify-between mb-2'>
                     <div className='flex items-center gap-3'>
                       <span className={`text-lg font-semibold tabular-nums ${
-                        isBelowThreshold ? 'text-amber-400/70' : 'text-white/50'
+                        isBelowThreshold ? 'text-amber-400/70' : 'text-white/65'
                       }`}>
                         {metric.score}
                       </span>
-                      <p className={`text-sm font-medium ${isBelowThreshold ? 'text-white/70' : 'text-white/55'}`}>
+                      <p className={`text-sm font-medium ${isBelowThreshold ? 'text-white/80' : 'text-white/65'}`}>
                         {metric.label}
                       </p>
                     </div>
-                    <span className='text-[10px] text-white/15'>{metric.weight}</span>
+                    <span className='text-[10px] text-white/30'>{metric.weight}</span>
                   </div>
                   <div className='w-full h-1 bg-white/6 rounded-full overflow-hidden mb-2'>
                     <div
@@ -873,7 +873,7 @@ function overview() {
                       }}
                     />
                   </div>
-                  <p className='text-xs text-white/45 leading-relaxed'>{metric.assessment}</p>
+                  <p className='text-xs text-white/55 leading-relaxed'>{metric.assessment}</p>
                 </div>
               </div>
             )
@@ -882,9 +882,9 @@ function overview() {
 
         {/* Summary Footer */}
         <div className='px-5 py-2.5 border-t border-white/6 bg-white/1.5 flex flex-wrap items-center gap-x-6 gap-y-1'>
-          <span className='text-[10px] text-white/20'>Weighted Average: <span className='text-white/30'>6.6</span></span>
-          <span className='text-[10px] text-white/20'>Metrics Below Threshold: <span className='text-white/30'>1 of 6</span></span>
-          <span className='text-[10px] text-white/20'>Score Spread: <span className='text-white/30'>4.0</span></span>
+          <span className='text-[10px] text-white/35'>Weighted Average: <span className='text-white/40'>6.6</span></span>
+          <span className='text-[10px] text-white/35'>Metrics Below Threshold: <span className='text-white/40'>1 of 6</span></span>
+          <span className='text-[10px] text-white/35'>Score Spread: <span className='text-white/40'>4.0</span></span>
         </div>
       </div>
 
@@ -893,8 +893,8 @@ function overview() {
         {/* Section Header with Risk Classification */}
         <div className='w-full px-5 py-3 border-b border-white/8 bg-white/3 rounded-t-[5px] flex items-center justify-between'>
           <div className='flex items-center gap-3'>
-            <h1 className='text-base font-medium text-white/80 tracking-wide'>Risk & Constraint Analysis</h1>
-            <span className='text-[10px] text-white/25 uppercase tracking-widest font-medium'>Fragility Assessment</span>
+            <h1 className='text-base font-medium text-white/90 tracking-wide'>Risk & Constraint Analysis</h1>
+            <span className='text-[10px] text-white/40 uppercase tracking-widest font-medium'>Fragility Assessment</span>
           </div>
           <div className='flex items-center gap-3'>
             <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded border ${
@@ -905,7 +905,7 @@ function overview() {
             }`}>
               {riskAnalysis.overallRisk} Risk
             </span>
-            <BsThreeDots className='text-white/30 hover:text-white/50 cursor-pointer transition-colors' />
+            <BsThreeDots className='text-white/40 hover:text-white/65 cursor-pointer transition-colors' />
           </div>
         </div>
 
@@ -915,16 +915,16 @@ function overview() {
           {/* Left Column: Risk Drivers */}
           {riskAnalysis.primaryDrivers.length > 0 && (
             <div className='px-5 py-5 border-b lg:border-b-0 lg:border-r border-white/8'>
-              <p className='text-[10px] text-white/25 uppercase tracking-widest font-medium mb-4'>Primary Risk Drivers</p>
+              <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium mb-4'>Primary Risk Drivers</p>
               <div className='space-y-3'>
                 {riskAnalysis.primaryDrivers.map((driver, i) => (
                   <div key={i} className='flex items-start gap-2.5'>
                     <div className='w-1 h-1 rounded-full bg-amber-500/40 mt-1.5 shrink-0' />
-                    <span className='text-sm text-white/50 leading-relaxed'>
+                    <span className='text-sm text-white/65 leading-relaxed'>
                       {driver.label.split(driver.boldWord).map((part, j, arr) => (
                         <React.Fragment key={j}>
                           {part}
-                          {j < arr.length - 1 && <span className='text-white/70 font-medium'>{driver.boldWord}</span>}
+                          {j < arr.length - 1 && <span className='text-white/80 font-medium'>{driver.boldWord}</span>}
                         </React.Fragment>
                       ))}
                     </span>
@@ -937,12 +937,12 @@ function overview() {
           {/* Right Column: Structural Constraints */}
           {riskAnalysis.structuralConstraints.length > 0 && (
             <div className='px-5 py-5'>
-              <p className='text-[10px] text-white/25 uppercase tracking-widest font-medium mb-4'>Structural Constraints</p>
+              <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium mb-4'>Structural Constraints</p>
               <div className='space-y-4'>
                 {riskAnalysis.structuralConstraints.map((constraint, i) => (
                   <div key={i}>
-                    <p className='text-sm text-white/55 font-medium mb-0.5'>{constraint.label}</p>
-                    <p className='text-xs text-white/30 leading-relaxed'>{constraint.description}</p>
+                    <p className='text-sm text-white/65 font-medium mb-0.5'>{constraint.label}</p>
+                    <p className='text-xs text-white/40 leading-relaxed'>{constraint.description}</p>
                   </div>
                 ))}
               </div>
@@ -954,12 +954,12 @@ function overview() {
         {riskAnalysis.criticalWeaknesses.length > 0 && (
           <div className='border-t border-white/8'>
             <div className='px-5 py-4'>
-              <p className='text-[10px] text-white/25 uppercase tracking-widest font-medium mb-4'>Critical Weaknesses</p>
+              <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium mb-4'>Critical Weaknesses</p>
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                 {riskAnalysis.criticalWeaknesses.map((weakness, i) => (
                   <div key={i} className='border-l-2 border-amber-500/25 pl-3.5'>
-                    <p className='text-sm text-white/60 font-medium mb-1'>{weakness.title}</p>
-                    <p className='text-xs text-white/30 leading-relaxed'>{weakness.description}</p>
+                    <p className='text-sm text-white/70 font-medium mb-1'>{weakness.title}</p>
+                    <p className='text-xs text-white/40 leading-relaxed'>{weakness.description}</p>
                   </div>
                 ))}
               </div>
@@ -969,9 +969,9 @@ function overview() {
 
         {/* Risk Summary Footer */}
         <div className='px-5 py-2.5 border-t border-white/6 bg-white/1.5 flex flex-wrap items-center gap-x-6 gap-y-1'>
-          <span className='text-[10px] text-white/20'>Drivers Identified: <span className='text-white/30'>{riskAnalysis.primaryDrivers.length}</span></span>
-          <span className='text-[10px] text-white/20'>Critical Weaknesses: <span className='text-white/30'>{riskAnalysis.criticalWeaknesses.length}</span></span>
-          <span className='text-[10px] text-white/20'>Constraints: <span className='text-white/30'>{riskAnalysis.structuralConstraints.length}</span></span>
+          <span className='text-[10px] text-white/35'>Drivers Identified: <span className='text-white/40'>{riskAnalysis.primaryDrivers.length}</span></span>
+          <span className='text-[10px] text-white/35'>Critical Weaknesses: <span className='text-white/40'>{riskAnalysis.criticalWeaknesses.length}</span></span>
+          <span className='text-[10px] text-white/35'>Constraints: <span className='text-white/40'>{riskAnalysis.structuralConstraints.length}</span></span>
         </div>
       </div>
 
@@ -980,10 +980,10 @@ function overview() {
         {/* Section Header */}
         <div className='w-full px-5 py-3 border-b border-white/8 bg-white/3 rounded-t-[5px] flex items-center justify-between'>
           <div className='flex items-center gap-3'>
-            <h1 className='text-base font-medium text-white/80 tracking-wide'>Primary Strategic Recommendation</h1>
-            <span className='text-[10px] text-white/25 uppercase tracking-widest font-medium'>System Directive</span>
+            <h1 className='text-base font-medium text-white/90 tracking-wide'>Primary Strategic Recommendation</h1>
+            <span className='text-[10px] text-white/40 uppercase tracking-widest font-medium'>System Directive</span>
           </div>
-          <BsThreeDots className='text-white/30 hover:text-white/50 cursor-pointer transition-colors' />
+          <BsThreeDots className='text-white/40 hover:text-white/65 cursor-pointer transition-colors' />
         </div>
 
         {/* Directive Body — Split layout */}
@@ -995,29 +995,29 @@ function overview() {
             <div className='px-5 py-5 border-b border-white/6'>
               <div className='flex items-center gap-2.5 mb-3'>
                 <div className='w-1.5 h-1.5 rounded-full bg-[#7C5CFF]/50' />
-                <p className='text-[10px] text-white/25 uppercase tracking-widest font-medium'>Decision</p>
+                <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium'>Decision</p>
               </div>
-              <h2 className='text-lg font-medium text-white/80 mb-2'>Pursue Immediate Validation</h2>
-              <p className='text-sm text-white/50 leading-relaxed max-w-2xl'>
+              <h2 className='text-lg font-medium text-white/90 mb-2'>Pursue Immediate Validation</h2>
+              <p className='text-sm text-white/65 leading-relaxed max-w-2xl'>
                 Limited defensibility necessitates verification of market demand before further development investment. Current metric profile does not support capital escalation without empirical confirmation of core assumptions.
               </p>
             </div>
 
             {/* Supporting Rationale */}
             <div className='px-5 py-4'>
-              <p className='text-[10px] text-white/25 uppercase tracking-widest font-medium mb-3'>Rationale</p>
+              <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium mb-3'>Rationale</p>
               <div className='space-y-2'>
                 <div className='flex items-start gap-2.5'>
-                  <span className='text-[10px] text-white/20 mt-0.5 shrink-0'>01</span>
-                  <p className='text-xs text-white/50 leading-relaxed'>High market demand (8.5) confirms addressable interest, but low differentiation (4.5) exposes the position to competitive erosion.</p>
+                  <span className='text-[10px] text-white/35 mt-0.5 shrink-0'>01</span>
+                  <p className='text-xs text-white/65 leading-relaxed'>High market demand (8.5) confirms addressable interest, but low differentiation (4.5) exposes the position to competitive erosion.</p>
                 </div>
                 <div className='flex items-start gap-2.5'>
-                  <span className='text-[10px] text-white/20 mt-0.5 shrink-0'>02</span>
-                  <p className='text-xs text-white/50 leading-relaxed'>Pre-validation stage requires empirical evidence before resource commitment. Validation reduces downside exposure while preserving optionality.</p>
+                  <span className='text-[10px] text-white/35 mt-0.5 shrink-0'>02</span>
+                  <p className='text-xs text-white/65 leading-relaxed'>Pre-validation stage requires empirical evidence before resource commitment. Validation reduces downside exposure while preserving optionality.</p>
                 </div>
                 <div className='flex items-start gap-2.5'>
-                  <span className='text-[10px] text-white/20 mt-0.5 shrink-0'>03</span>
-                  <p className='text-xs text-white/50 leading-relaxed'>Monetization (7.0) and scalability (7.5) are supportive but conditional on differentiation improvements to sustain margin.</p>
+                  <span className='text-[10px] text-white/35 mt-0.5 shrink-0'>03</span>
+                  <p className='text-xs text-white/65 leading-relaxed'>Monetization (7.0) and scalability (7.5) are supportive but conditional on differentiation improvements to sustain margin.</p>
                 </div>
               </div>
             </div>
@@ -1025,33 +1025,33 @@ function overview() {
 
           {/* Right: Immediate Focus Areas */}
           <div className='lg:col-span-4 px-5 py-5'>
-            <p className='text-[10px] text-white/25 uppercase tracking-widest font-medium mb-4'>Immediate Priorities</p>
+            <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium mb-4'>Immediate Priorities</p>
             <div className='space-y-4'>
               <div className='flex items-start gap-3'>
                 <div className='w-6 h-6 shrink-0 rounded border border-white/10 bg-white/3 flex items-center justify-center mt-0.5'>
-                  <LuFlaskConical className='text-white/30 text-xs' />
+                  <LuFlaskConical className='text-white/40 text-xs' />
                 </div>
                 <div>
-                  <p className='text-sm text-white/55 font-medium'>Build MVP</p>
-                  <p className='text-[11px] text-white/25 mt-0.5'>Functional prototype for assumption testing</p>
+                  <p className='text-sm text-white/65 font-medium'>Build MVP</p>
+                  <p className='text-[11px] text-white/40 mt-0.5'>Functional prototype for assumption testing</p>
                 </div>
               </div>
               <div className='flex items-start gap-3'>
                 <div className='w-6 h-6 shrink-0 rounded border border-white/10 bg-white/3 flex items-center justify-center mt-0.5'>
-                  <LuMessageSquare className='text-white/30 text-xs' />
+                  <LuMessageSquare className='text-white/40 text-xs' />
                 </div>
                 <div>
-                  <p className='text-sm text-white/55 font-medium'>Conduct Customer Interviews</p>
-                  <p className='text-[11px] text-white/25 mt-0.5'>20+ structured interviews with target ICP</p>
+                  <p className='text-sm text-white/65 font-medium'>Conduct Customer Interviews</p>
+                  <p className='text-[11px] text-white/40 mt-0.5'>20+ structured interviews with target ICP</p>
                 </div>
               </div>
               <div className='flex items-start gap-3'>
                 <div className='w-6 h-6 shrink-0 rounded border border-white/10 bg-white/3 flex items-center justify-center mt-0.5'>
-                  <LuRocket className='text-white/30 text-xs' />
+                  <LuRocket className='text-white/40 text-xs' />
                 </div>
                 <div>
-                  <p className='text-sm text-white/55 font-medium'>Launch Test Campaign</p>
-                  <p className='text-[11px] text-white/25 mt-0.5'>Paid acquisition test across 2+ channels</p>
+                  <p className='text-sm text-white/65 font-medium'>Launch Test Campaign</p>
+                  <p className='text-[11px] text-white/40 mt-0.5'>Paid acquisition test across 2+ channels</p>
                 </div>
               </div>
             </div>
@@ -1060,19 +1060,19 @@ function overview() {
 
         {/* Directive Footer */}
         <div className='px-5 py-2.5 border-t border-white/6 bg-white/1.5 flex flex-wrap items-center gap-x-6 gap-y-1'>
-          <span className='text-[10px] text-white/20'>Confidence: <span className='text-white/30'>72%</span></span>
-          <span className='text-[10px] text-white/20'>Risk-Adjusted: <span className='text-white/30'>Yes</span></span>
-          <span className='text-[10px] text-white/20'>Stage-Aligned: <span className='text-white/30'>Pre-validation</span></span>
+          <span className='text-[10px] text-white/35'>Confidence: <span className='text-white/40'>72%</span></span>
+          <span className='text-[10px] text-white/35'>Risk-Adjusted: <span className='text-white/40'>Yes</span></span>
+          <span className='text-[10px] text-white/35'>Stage-Aligned: <span className='text-white/40'>Pre-validation</span></span>
         </div>
       </div>
 
       {/* Structured Action Roadmap */}
       <div className='w-full'>
         <div className='flex justify-between items-center px-2 mb-3'>
-          <h1 className='text-xl text-white/80'>Structured Action Roadmap</h1>
+          <h1 className='text-xl text-white/90'>Structured Action Roadmap</h1>
           <div className='flex items-center gap-3'>
-            <span className='text-xs text-white/30'>{roadmap.length} phases activated</span>
-            <BsThreeDots className='text-white/30 hover:text-white cursor-pointer' />
+            <span className='text-xs text-white/40'>{roadmap.length} phases activated</span>
+            <BsThreeDots className='text-white/40 hover:text-white cursor-pointer' />
           </div>
         </div>
         <div className='space-y-0'>
@@ -1095,36 +1095,36 @@ function overview() {
                     {getPhaseIcon(phase.iconKey)}
                   </div>
                   <div className='flex-1 min-w-0'>
-                    <h3 className='text-sm font-semibold text-white/80'>{phase.name}</h3>
+                    <h3 className='text-sm font-semibold text-white/90'>{phase.name}</h3>
                   </div>
-                  <span className='text-xs text-white/25 shrink-0'>{phase.duration}</span>
+                  <span className='text-xs text-white/40 shrink-0'>{phase.duration}</span>
                   <span className={`text-xs px-2 py-0.5 rounded-[3px] shrink-0 ${
                     phase.type === 'mandatory' ? 'bg-[#7C5CFF]/15 text-[#7C5CFF]' :
                     phase.type === 'conditional' ? 'bg-yellow-500/10 text-yellow-500/70' :
-                    'bg-white/5 text-white/30'
+                    'bg-white/5 text-white/40'
                   }`}>{phase.type}</span>
-                  <BsThreeDots className='text-white/20 hover:text-white cursor-pointer shrink-0' />
+                  <BsThreeDots className='text-white/35 hover:text-white cursor-pointer shrink-0' />
                 </div>
                 {/* Body */}
                 <div className='px-4 py-3 space-y-2.5'>
-                  <p className='text-sm text-white/40 leading-5'>{phase.objective}</p>
+                  <p className='text-sm text-white/50 leading-5'>{phase.objective}</p>
                   {/* Actions */}
                   <div className='space-y-1.5'>
                     {phase.actions.map((action, j) => (
                       <div key={j} className='flex items-start gap-2'>
-                        <LuDot className='text-white/20 text-lg shrink-0 -mt-0.5' />
-                        <span className='text-xs text-white/35 leading-4'>{action}</span>
+                        <LuDot className='text-white/35 text-lg shrink-0 -mt-0.5' />
+                        <span className='text-xs text-white/45 leading-4'>{action}</span>
                       </div>
                     ))}
                   </div>
                   {/* Footer metadata */}
                   <div className='flex flex-wrap items-center gap-x-4 gap-y-1 pt-1.5 border-t border-white/5'>
-                    <span className='text-xs text-white/25'>
-                      Success: <span className='text-white/40'>{phase.successCriteria}</span>
+                    <span className='text-xs text-white/40'>
+                      Success: <span className='text-white/50'>{phase.successCriteria}</span>
                     </span>
                   </div>
                   <div className='flex items-center gap-1.5'>
-                    <span className='text-xs text-white/20'>Activation:</span>
+                    <span className='text-xs text-white/35'>Activation:</span>
                     <span className='text-xs text-[#7C5CFF]/60'>{phase.activationReason}</span>
                   </div>
                 </div>

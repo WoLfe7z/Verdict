@@ -92,7 +92,7 @@ export default function Home() {
               Most startup ideas fail before they even start.
             </h2>
 
-            <p className="text-xl text-white/60">
+            <p className="text-xl text-white/70">
               Not because founders are lazy — but because they build without clarity.
             </p>
           </div>
@@ -104,7 +104,7 @@ export default function Home() {
               <h3 className="text-2xl font-semibold text-white mb-4">
                 Months of wasted execution
               </h3>
-              <p className="text-white/60 leading-relaxed">
+              <p className="text-white/70 leading-relaxed">
                 Founders invest time, energy, and money — only to discover the idea
                 never had real market demand.
               </p>
@@ -114,7 +114,7 @@ export default function Home() {
               <h3 className="text-2xl font-semibold text-white mb-4">
                 Biased feedback
               </h3>
-              <p className="text-white/60 leading-relaxed">
+              <p className="text-white/70 leading-relaxed">
                 Friends encourage. Online communities speculate. No one gives a
                 structured, objective verdict.
               </p>
@@ -124,7 +124,7 @@ export default function Home() {
               <h3 className="text-2xl font-semibold text-white mb-4">
                 AI without judgment
               </h3>
-              <p className="text-white/60 leading-relaxed">
+              <p className="text-white/70 leading-relaxed">
                 Most AI tools generate ideas endlessly — but they don’t tell you
                 whether you should actually pursue them.
               </p>
@@ -147,9 +147,9 @@ export default function Home() {
             </Link>
 
             <div className="flex items-center gap-6 text-white">
-              <Link href="/features" className="hover:text-white/60 text-sm transition-colors duration-200">Features</Link>
-              <Link href="/contact" className="hover:text-white/60 text-sm transition-colors duration-200">How it works</Link>
-              <Link href="/about" className="hover:text-white/60 text-sm transition-colors duration-200">About</Link>
+              <Link href="/features" className="hover:text-white/70 text-sm transition-colors duration-200">Features</Link>
+              <Link href="/contact" className="hover:text-white/70 text-sm transition-colors duration-200">How it works</Link>
+              <Link href="/about" className="hover:text-white/70 text-sm transition-colors duration-200">About</Link>
             </div>
           </div>
           <h2 className="font-headers text-white font-bold text-[20rem]">Verdict</h2>
