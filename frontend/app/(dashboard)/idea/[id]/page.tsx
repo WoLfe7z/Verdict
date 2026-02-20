@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 
 import { supabase } from '@/lib/supabaseClient'
+import Navbar from "@/components/layout/navbar"
 import Chat from '@/components/idea/chat'
 import Overview from '@/components/idea/overview'
 import Avatar from '@mui/material/Avatar';
@@ -97,80 +98,12 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
   return (
     <div className="font-primary">
-      <nav className='fixed z-10 flex items-center w-[100%] px-3 bg-[#141414] text-white border-b border-white/10'>
-        {/* <div className='flex justify-center w-12 border-r border-white/10'>
-          <Image src="/logo2.png" alt="logo" width={30} height={30} />
-        </div> */}
-        <div className='flex items-center w-full'>
-          <Image src="/logo2.png" alt="logo" width={30} height={30} className="relative z-10"/>
-          {/* <LuSlash className='ml-2 text-sm text-gray-400' /> */}
-          {/* <h1 className='ml-2 text-md flex items-center gap-2'><CiMap size={20} /> Projects</h1> */}
-          <div className="absolute top-0 text-center w-full h-full z-0">
-            <div className="w-full h-full flex justify-center items-center">
-              <p className="text-sm flex items-center">
-                <Link href="/projects" className="text-white/65 flex items-center underline">
-                  Projects <HiOutlineSlash className="mx-2"/>
-                </Link> 
-                {idea?.title || 'Loading...'}
-              </p>            
-            </div>
-          </div>
-          <div className='ml-auto relative z-10'>
-            <button
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className='flex items-center gap-3 hover:cursor-pointer p-2 rounded-lg transition'
-            >
-              <div className='text-right'>
-                <p className='text-sm font-semibold'>Lan Kuhar</p>
-                <p className='text-xs text-gray-400'>Administrator</p>
-              </div>
-              <Avatar alt="Eucharia Odili" src="/profile.jpg" sx={{ width: 30, height: 30 }} />
-            </button>
-
-            {/* Dropdown Menu */}
-            {isDropdownOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className='absolute right-0 mt-2 w-64 bg-[#1a1a1a] rounded-[10px] p-2 shadow-lg z-50'>
-                <div className='px-4 py-3'>
-                  <p className='text-sm font-semibold'>Eucharia</p>
-                  <p className='text-xs text-gray-400'>odilieucharia@gmail.com</p>
-                </div>
-
-                <div className='mx-auto w-[90%] h-px bg-white/10 my-2'></div>
-
-                <Link href="" className='w-full my-1 px-4 py-2 rounded-[5px] hover:bg-white/5 text-left text-sm flex items-center transition'>
-                  Profile
-                </Link>
-                <button className='w-full my-1 px-4 py-2 rounded-[5px] hover:bg-white/5 text-left text-sm flex items-center transition'>
-                  Account Settings
-                </button>
-                <div className='mx-auto w-[90%] h-px bg-white/10 my-2'></div>
-                <button className='w-full my-1 px-4 py-2 rounded-[5px] hover:bg-white/5 text-left text-sm flex items-center transition'>
-                  Plan & Billing
-                </button>
-                <button className='w-full my-1 px-4 py-2 rounded-[5px] hover:bg-white/5 text-left text-sm flex items-center transition'>
-                  Usage / Limits
-                </button>
-                <div className='mx-auto w-[90%] h-px bg-white/10 my-2'></div>
-                <button className='w-full my-1 px-4 py-2 rounded-[5px] hover:bg-white/5 text-left text-sm flex items-center transition'>
-                  Notifications
-                </button>
-                <button className='w-full my-1 px-4 py-2 rounded-[5px] hover:bg-white/5 text-left text-sm flex items-center transition'>
-                  Support
-                </button>
-
-                <div className='mx-auto w-[90%] h-px bg-white/10 my-2'></div>
-
-                <button onClick={handleLogout} className='w-full my-1 px-4 py-2 rounded-[5px] hover:bg-white/5 text-left text-sm flex items-center transition text-red-400'>
-                  Log out
-                </button>
-              </motion.div>
-            )}
-          </div>
-        </div>
-      </nav>
+      <Navbar 
+        breadcrumb={[
+          { label: 'Projects', href: '/projects' },
+          { label: idea?.title || 'Loading...' }
+        ]}
+      />
       <div
         onMouseEnter={() => setIsExpanded(true)}
         onMouseLeave={() => setIsExpanded(false)}

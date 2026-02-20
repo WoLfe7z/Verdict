@@ -7,6 +7,8 @@ import { usePathname, useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabaseClient"
 import Link from "next/link"
 
+import Navbar from "@/components/layout/navbar"
+
 // Icons
 import { CiMoneyCheck1 } from "react-icons/ci"
 import { GoProjectRoadmap } from "react-icons/go"
@@ -156,10 +158,7 @@ export default function Page() {
 
   return (
     <div className="font-primary">
-      {/* Nav & Sidebar - isti kot prej */}
-      <nav className='fixed z-10 flex items-center w-full px-3 bg-[#141414] text-white border-b border-white/10'>
-        {/* ... nav code ... */}
-      </nav>
+      <Navbar />
 
       <div
         onMouseEnter={() => setIsExpanded(true)}
@@ -251,16 +250,16 @@ export default function Page() {
                             className="absolute left-0 mt-1 w-40 bg-[#1a1a1a] rounded-[10px] p-2 shadow-lg z-50 border border-white/10"
                             onClick={(e) => { e.preventDefault(); e.stopPropagation() }}
                           >
-                            <button 
-                              onClick={(e) => {
-                                e.preventDefault()
-                                e.stopPropagation()
-                                router.push(`/idea/edit/${idea.id}`)
-                              }}
-                              className="w-full px-3 py-2 rounded-[5px] hover:bg-white/5 text-left text-sm transition"
-                            >
-                              Edit
-                            </button>
+                          <button 
+                            onClick={(e) => {
+                              e.preventDefault()
+                              e.stopPropagation()
+                              router.push(`/idea/edit/${idea.id}`)
+                            }}
+                            className="w-full px-3 py-2 rounded-[5px] hover:bg-white/5 text-left text-sm transition"
+                          >
+                            Edit
+                          </button>
                             <button className="w-full px-3 py-2 rounded-[5px] hover:bg-white/5 text-left text-sm transition">
                               Duplicate
                             </button>
