@@ -4,12 +4,13 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:300
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }   // Params are a promise that resolves to an object containing the id parameter
 ) {
   try {
     const token = request.headers.get('authorization')
+    const { id } = await params
     
-    const response = await fetch(`${BACKEND_URL}/api/ideas/${params.id}`, {
+    const response = await fetch(`${BACKEND_URL}/api/ideas/${id}`, {
       headers: { 'Authorization': token || '' }
     })
 
@@ -22,13 +23,14 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const token = request.headers.get('authorization')
     const body = await request.json()
+    const { id } = await params
     
-    const response = await fetch(`${BACKEND_URL}/api/ideas/${params.id}`, {
+    const response = await fetch(`${BACKEND_URL}/api/ideas/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -46,12 +48,13 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const token = request.headers.get('authorization')
+    const { id } = await params
     
-    const response = await fetch(`${BACKEND_URL}/api/ideas/${params.id}`, {
+    const response = await fetch(`${BACKEND_URL}/api/ideas/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': token || '' }
     })

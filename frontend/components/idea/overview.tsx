@@ -556,7 +556,7 @@ function generateRoadmap(m: Metrics, stage: Stage, risk: RiskLevel): ActivatedPh
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
-function overview() {
+function overview({ idea }: { idea: any }) {
   const score = 10
 
   // Metrics (same source as Core Metric Analysis)
@@ -682,7 +682,7 @@ function overview() {
 
         {/* ─── Tier 3: Metadata Footer ─── */}
         <div className='px-5 py-2.5 border-t border-white/6 bg-white/1.5 flex flex-wrap items-center gap-x-6 gap-y-1'>
-          <span className='text-[10px] text-white/35'>Last Updated: <span className='text-white/40'>Feb 18, 2026</span></span>
+          <span className='text-[10px] text-white/35'>Last Updated: <span className='text-white/40'>{new Date(Date.now()).toLocaleDateString()}</span></span>
           <span className='text-[10px] text-white/35'>Model Version: <span className='text-white/40'>v2.4</span></span>
           <span className='text-[10px] text-white/35'>Basis: <span className='text-white/40'>6 Core Metrics</span></span>
           <span className='text-[10px] text-white/35'>Evaluation Type: <span className='text-white/40'>Automated</span></span>

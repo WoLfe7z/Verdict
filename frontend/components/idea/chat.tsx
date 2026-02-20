@@ -8,7 +8,7 @@ import {
   LuTarget, LuDollarSign, LuShield, LuTrendingUp, LuUsers, LuSearch
 } from "react-icons/lu";
 
-function Chat() {
+function Chat({ ideaId }: { ideaId: string }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleInput = useCallback(() => {
