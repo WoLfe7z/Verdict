@@ -18,10 +18,13 @@ import { IoAnalytics } from "react-icons/io5";
 import { RxDashboard } from "react-icons/rx";
 import { HiOutlineSlash } from "react-icons/hi2";
 import Navigation from "@/components/idea/navigation"
+import { Shield } from "lucide-react";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 
 export default function Page() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const isAdmin = useIsAdmin()
   const router = useRouter()
 
   const handleLogout = async () => {
@@ -56,7 +59,7 @@ export default function Page() {
 
   return (
     <div className="font-primary">
-      <nav className='fixed z-10 flex items-center w-[100%] px-3 bg-[#141414] text-white border-b border-white/10'>
+      <nav className='fixed z-20 flex items-center w-[100%] px-3 bg-[#141414] text-white border-b border-white/10'>
         {/* <div className='flex justify-center w-12 border-r border-white/10'>
           <Image src="/logo2.png" alt="logo" width={30} height={30} />
         </div> */}
@@ -64,19 +67,29 @@ export default function Page() {
           <Image src="/logo2.png" alt="logo" width={30} height={30} className="relative z-10"/>
           {/* <LuSlash className='ml-2 text-sm text-gray-400' /> */}
           {/* <h1 className='ml-2 text-md flex items-center gap-2'><CiMap size={20} /> Projects</h1> */}
-          <div className="absolute top-0 text-center w-full h-full z-0">
+          <div className="absolute top-0 text-center w-full h-full z-0 pointer-events-none">
             <div className="w-full h-full flex justify-center items-center">
-              <p className="text-sm flex items-center"><Link href="/projects" className="text-white/65 flex items-center underline">Projects <HiOutlineSlash  className="mx-2"/></Link> [ idea name ]</p>
+              <p className="text-sm flex items-center"><Link href="/projects" className="text-white/65 flex items-center underline pointer-events-auto">Projects <HiOutlineSlash  className="mx-2"/></Link> [ idea name ]</p>
             </div>
           </div>
-          <div className='ml-auto relative z-10'>
+          <div className='ml-auto flex items-center gap-2 z-10'>
+            {isAdmin && (
+              <Link
+                href="/admin"
+                className='flex items-center gap-1.5 text-xs font-medium text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/15 border border-indigo-500/20 px-2.5 py-1.5 rounded-md transition'
+              >
+                <Shield className='w-3 h-3' />
+                Admin
+              </Link>
+            )}
+            <div className='relative'>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className='flex items-center gap-3 hover:cursor-pointer p-2 rounded-lg transition'
             >
               <div className='text-right'>
                 <p className='text-sm font-semibold'>Lan Kuhar</p>
-                <p className='text-xs text-gray-400'>Administrator</p>
+                <p className='text-xs text-gray-400'>{isAdmin ? "Administrator" : "Welcome"}</p>
               </div>
               <Avatar alt="Eucharia Odili" src="/profile.jpg" sx={{ width: 30, height: 30 }} />
             </button>
@@ -122,6 +135,7 @@ export default function Page() {
                 </button>
               </motion.div>
             )}
+            </div>
           </div>
         </div>
       </nav>
@@ -224,7 +238,7 @@ export default function Page() {
       <div className="fixed z-0 pl-12 pt-14 text-white w-full h-screen bg-cover bg-bottom bg-no-repeat">
         <div className="mx-auto w-full h-full overflow-y-auto">
           <div className="flex flex-col xl:flex-row w-full p-6 sm:p-10 lg:p-10 pb-20 gap-6 xl:gap-0">
-              <div className="w-3/20 h-full">
+              <div className="w-3/20">
                 <Navigation/>
               </div>
               <div className="w-full xl:w-12/20">

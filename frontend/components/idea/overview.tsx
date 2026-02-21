@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 // Icons
 import { LuDot } from "react-icons/lu";
@@ -6,7 +6,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { IoWarning } from "react-icons/io5";
 import {
   LuClipboardCheck, LuFlaskConical, LuMessageSquare, LuRocket, LuChartColumnIncreasing,
-  LuSearch, LuUsers, LuTarget, LuShield, LuDollarSign, LuCpu, LuTrendingUp, LuRefreshCw, LuBriefcase,
+  LuSearch, LuUsers, LuTarget, LuDollarSign, LuCpu, LuTrendingUp, LuRefreshCw, LuBriefcase,
 } from "react-icons/lu";
 
 // ─── Risk & Constraint Analysis Engine ───────────────────────────────────────
@@ -554,6 +554,142 @@ function generateRoadmap(m: Metrics, stage: Stage, risk: RiskLevel): ActivatedPh
   return activated
 }
 
+// ─── Roadmap Readiness Engine ──────────────────────────────────────────────
+
+type ReadinessTier = 'Not Ready' | 'Conditionally Ready' | 'Execution Ready'
+
+interface MetricBreakdownRow {
+  key: keyof Metrics
+  label: string
+  value: number
+  weight: number
+  contribution: number
+  meetsMinimum: boolean
+}
+
+interface ReadinessResult {
+  rri: number
+  tier: ReadinessTier
+  hardStopViolations: string[]
+  metricBreakdown: MetricBreakdownRow[]
+  improvementSignal: {
+    label: string
+    currentValue: number
+    rriGainPerPoint: number
+    pointsToNextTier: number
+  } | null
+}
+
+// Weights must sum to 100. Each point of a metric contributes weight/10 to RRI.
+// Customer Clarity is highest-weighted: roadmap phases are ICP-defined.
+// Market Demand is second: execution presupposes an addressable target.
+// Scalability is lowest: a forward-looking output metric, not a prerequisite.
+const RRI_WEIGHTS: Record<keyof Metrics, number> = {
+  customerClarity:  25,
+  marketDemand:     20,
+  differentiation:  15,
+  monetization:     15,
+  problemSeverity:  15,
+  scalability:      10,
+}
+
+const METRIC_LABELS: Record<keyof Metrics, string> = {
+  marketDemand:    'Market Demand',
+  problemSeverity: 'Problem Severity',
+  customerClarity: 'Customer Clarity',
+  differentiation: 'Differentiation',
+  monetization:    'Monetization',
+  scalability:     'Scalability',
+}
+
+function computeReadiness(m: Metrics): ReadinessResult {
+  // Compute RRI — normalized to 0–100
+  const rawRRI =
+    m.customerClarity  * 25 +
+    m.marketDemand     * 20 +
+    m.differentiation  * 15 +
+    m.monetization     * 15 +
+    m.problemSeverity  * 15 +
+    m.scalability      * 10
+  const rri = Math.round(rawRRI / 10 * 10) / 10
+
+  // Hard stop rules — fatal blockers regardless of RRI
+  const hardStopViolations: string[] = []
+  if (m.customerClarity < 3)
+    hardStopViolations.push(
+      `Customer Clarity (${m.customerClarity}) is below the minimum viable threshold of 3.0 — target customer is undefined. All roadmap phases require a defined ICP.`
+    )
+  if (m.marketDemand < 2)
+    hardStopViolations.push(
+      `Market Demand (${m.marketDemand}) is below the minimum viable threshold of 2.0 — no market signal present. Execution without demand evidence is structurally unsound.`
+    )
+  if (m.problemSeverity < 2)
+    hardStopViolations.push(
+      `Problem Severity (${m.problemSeverity}) is below the minimum viable threshold of 2.0 — no problem foundation. Roadmap intervention logic cannot be constructed.`
+    )
+  if (m.differentiation < 2 && m.monetization < 2)
+    hardStopViolations.push(
+      `Compound terminal weakness: Differentiation (${m.differentiation}) and Monetization (${m.monetization}) are both critically low. No competitive position and no revenue mechanism — roadmap generation would produce invalid output.`
+    )
+
+  // Structural minimums
+  const metricValues = Object.values(m) as number[]
+  const metricsBelow4 = metricValues.filter(v => v < 4).length
+  const weightedAvg =
+    (m.marketDemand * 1.5 + m.problemSeverity + m.customerClarity +
+     m.differentiation + m.monetization * 1.5 + m.scalability) / 7
+
+  // Metric breakdown — sorted by weight descending (highest contribution first)
+  const metricBreakdown: MetricBreakdownRow[] = (
+    Object.keys(RRI_WEIGHTS) as (keyof Metrics)[]
+  )
+    .sort((a, b) => RRI_WEIGHTS[b] - RRI_WEIGHTS[a])
+    .map(key => ({
+      key,
+      label: METRIC_LABELS[key],
+      value: m[key],
+      weight: RRI_WEIGHTS[key],
+      contribution: Math.round(m[key] * RRI_WEIGHTS[key] / 10 * 10) / 10,
+      meetsMinimum: m[key] >= 4,
+    }))
+
+  // Determine tier — hard stops and structural minimums take precedence
+  let tier: ReadinessTier
+  if (
+    hardStopViolations.length > 0 ||
+    rri < 45 ||
+    metricsBelow4 >= 3 ||
+    weightedAvg < 4.5
+  ) {
+    tier = 'Not Ready'
+  } else if (rri < 70) {
+    tier = 'Conditionally Ready'
+  } else {
+    tier = 'Execution Ready'
+  }
+
+  // Improvement signal — highest-weight metric with room to improve
+  // Shows what single metric change would most advance the RRI
+  let improvementSignal: ReadinessResult['improvementSignal'] = null
+  if (tier !== 'Execution Ready') {
+    const nextThreshold = tier === 'Not Ready' ? 45 : 70
+    const pointsToTier = nextThreshold - rri
+    const candidates = metricBreakdown
+      .filter(row => row.value < 9) // only metrics with room to grow
+      .map(row => ({
+        label: row.label,
+        currentValue: row.value,
+        rriGainPerPoint: Math.round(row.weight / 10 * 10) / 10,
+        pointsToNextTier: Math.round(pointsToTier / (row.weight / 10) * 10) / 10,
+      }))
+      .sort((a, b) => b.rriGainPerPoint - a.rriGainPerPoint)
+
+    improvementSignal = candidates[0] ?? null
+  }
+
+  return { rri, tier, hardStopViolations, metricBreakdown, improvementSignal }
+}
+
 // ─── Component ───────────────────────────────────────────────────────────────
 
 function overview() {
@@ -561,22 +697,24 @@ function overview() {
 
   // Metrics (same source as Core Metric Analysis)
   const metrics: Metrics = {
-    marketDemand: 8.5,
-    problemSeverity: 6,
-    customerClarity: 6.5,
-    differentiation: 4.5,
-    monetization: 7,
-    scalability: 7.5,
+    marketDemand: 9.0,
+    problemSeverity: 9.0,
+    customerClarity: 9.0,
+    differentiation: 9.0,
+    monetization: 9.0,
+    scalability: 9.0,
   }
 
   const stage: Stage = 'Pre-validation'
   const riskAnalysis = computeRiskAnalysis(metrics, stage)
   const roadmap = generateRoadmap(metrics, stage, riskAnalysis.overallRisk)
+  const readiness = computeReadiness(metrics)
+  const [readinessExpanded, setReadinessExpanded] = useState(false)
 
   return (
     <div className='space-y-5'>
       {/* ═══ Executive Strategic Summary ═══ */}
-      <div className='w-full border border-white/8 rounded-[5px] bg-white/2'>
+      <div id='executive-summary' className='w-full border border-white/8 rounded-[5px] bg-white/2'>
         {/* Section Header */}
         <div className='w-full px-5 py-3 border-b border-white/8 bg-white/3 rounded-t-md flex items-center justify-between'>
           <div className='flex items-center gap-3'>
@@ -690,7 +828,7 @@ function overview() {
       </div>
 
       {/* ═══ Strategic Interpretation ═══ */}
-      <div className='w-full border border-white/8 rounded-[5px] bg-white/2'>
+      <div id='strategic-interpretation' className='w-full border border-white/8 rounded-[5px] bg-white/2'>
         {/* Section Header */}
         <div className='w-full px-5 py-3 border-b border-white/8 bg-white/3 rounded-t-[5px] flex items-center justify-between'>
           <div className='flex items-center gap-3'>
@@ -764,7 +902,7 @@ function overview() {
       </div>
 
       {/* ═══ Core Metric Analysis ═══ */}
-      <div className='w-full border border-white/8 rounded-[5px] bg-white/2'>
+      <div id='core-metrics' className='w-full border border-white/8 rounded-[5px] bg-white/2'>
         {/* Section Header */}
         <div className='w-full px-5 py-3 border-b border-white/8 bg-white/3 rounded-t-[5px] flex items-center justify-between'>
           <div className='flex items-center gap-3'>
@@ -889,7 +1027,7 @@ function overview() {
       </div>
 
       {/* ═══ Risk & Constraint Analysis ═══ */}
-      <div className='w-full border border-white/8 rounded-[5px] bg-white/2'>
+      <div id='risk-analysis' className='w-full border border-white/8 rounded-[5px] bg-white/2'>
         {/* Section Header with Risk Classification */}
         <div className='w-full px-5 py-3 border-b border-white/8 bg-white/3 rounded-t-[5px] flex items-center justify-between'>
           <div className='flex items-center gap-3'>
@@ -976,7 +1114,7 @@ function overview() {
       </div>
 
       {/* ═══ Primary Strategic Recommendation ═══ */}
-      <div className='w-full border border-white/8 rounded-[5px] bg-white/2'>
+      <div id='recommendation' className='w-full border border-white/8 rounded-[5px] bg-white/2'>
         {/* Section Header */}
         <div className='w-full px-5 py-3 border-b border-white/8 bg-white/3 rounded-t-[5px] flex items-center justify-between'>
           <div className='flex items-center gap-3'>
@@ -1066,71 +1204,260 @@ function overview() {
         </div>
       </div>
 
-      {/* Structured Action Roadmap */}
-      <div className='w-full'>
-        <div className='flex justify-between items-center px-2 mb-3'>
-          <h1 className='text-xl text-white/90'>Structured Action Roadmap</h1>
-          <div className='flex items-center gap-3'>
-            <span className='text-xs text-white/40'>{roadmap.length} phases activated</span>
-            <BsThreeDots className='text-white/40 hover:text-white cursor-pointer' />
+      {/* ═══ Execution Readiness Framework + Structured Action Roadmap ═══ */}
+      <div id='action-roadmap' className='w-full space-y-3'>
+
+        {/* ─ Execution Readiness Framework ─ */}
+        <div className='w-full border border-white/8 rounded-[5px] bg-white/2'>
+          <div className='w-full px-5 py-3 border-b border-white/8 bg-white/3 rounded-t-[5px] flex items-center justify-between'>
+            <div className='flex items-center gap-3'>
+              <h1 className='text-base font-medium text-white/90 tracking-wide'>Execution Readiness Framework</h1>
+              <span className='text-[10px] text-white/40 uppercase tracking-widest font-medium'>Governance Policy</span>
+            </div>
+            <div className='flex items-center gap-3'>
+              <span className={`inline-flex items-center px-2.5 py-1 text-[11px] font-medium rounded border ${
+                readiness.tier === 'Execution Ready'
+                  ? 'bg-emerald-500/8 text-emerald-400/70 border-emerald-500/12'
+                  : readiness.tier === 'Conditionally Ready'
+                    ? 'bg-amber-500/8 text-amber-400/70 border-amber-500/12'
+                    : 'bg-red-500/8 text-red-400/60 border-red-500/12'
+              }`}>
+                {readiness.tier}
+              </span>
+              <button
+                onClick={() => setReadinessExpanded(v => !v)}
+                className='text-[11px] text-white/35 hover:text-white/60 transition-colors'
+              >
+                {readinessExpanded ? 'Collapse' : 'Show Breakdown'}
+              </button>
+              <BsThreeDots className='text-white/40 hover:text-white/65 cursor-pointer transition-colors' />
+            </div>
           </div>
-        </div>
-        <div className='space-y-0'>
-          {roadmap.map((phase, i) => (
-            <div key={phase.id} className='relative flex gap-0'>
-              {/* Vertical spine */}
-              <div className='flex flex-col items-center w-10 shrink-0'>
-                <div className='w-7 h-7 rounded-full border border-[#7C5CFF]/50 bg-[#7C5CFF]/10 flex items-center justify-center z-10'>
-                  <span className='text-xs font-semibold text-[#7C5CFF]'>{phase.sequence}</span>
-                </div>
-                {i < roadmap.length - 1 && (
-                  <div className='w-px flex-1 bg-[#7C5CFF]/20' />
-                )}
+
+          {/* RRI score + threshold bar — always visible */}
+          <div className='px-5 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-5'>
+            <div className='shrink-0'>
+              <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium mb-1'>Readiness Index</p>
+              <div className='flex items-baseline gap-1.5'>
+                <span className='text-3xl font-semibold text-white/90 tabular-nums'>{readiness.rri}</span>
+                <span className='text-sm text-white/30'>/ 100</span>
               </div>
-              {/* Phase card */}
-              <div className='flex-1 mb-3 ml-2 border border-white/10 rounded-[5px] overflow-hidden'>
-                {/* Header row */}
-                <div className='flex items-center gap-3 px-4 py-3 bg-white/2'>
-                  <div className='w-8 h-8 shrink-0 rounded-[5px] border border-[#7C5CFF]/30 bg-[#7C5CFF]/10 flex items-center justify-center'>
-                    {getPhaseIcon(phase.iconKey)}
-                  </div>
-                  <div className='flex-1 min-w-0'>
-                    <h3 className='text-sm font-semibold text-white/90'>{phase.name}</h3>
-                  </div>
-                  <span className='text-xs text-white/40 shrink-0'>{phase.duration}</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-[3px] shrink-0 ${
-                    phase.type === 'mandatory' ? 'bg-[#7C5CFF]/15 text-[#7C5CFF]' :
-                    phase.type === 'conditional' ? 'bg-yellow-500/10 text-yellow-500/70' :
-                    'bg-white/5 text-white/40'
-                  }`}>{phase.type}</span>
-                  <BsThreeDots className='text-white/35 hover:text-white cursor-pointer shrink-0' />
-                </div>
-                {/* Body */}
-                <div className='px-4 py-3 space-y-2.5'>
-                  <p className='text-sm text-white/50 leading-5'>{phase.objective}</p>
-                  {/* Actions */}
-                  <div className='space-y-1.5'>
-                    {phase.actions.map((action, j) => (
-                      <div key={j} className='flex items-start gap-2'>
-                        <LuDot className='text-white/35 text-lg shrink-0 -mt-0.5' />
-                        <span className='text-xs text-white/45 leading-4'>{action}</span>
+            </div>
+            <div className='flex-1 w-full max-w-xl'>
+              <div className='relative h-1.5 bg-white/6 rounded-full overflow-hidden'>
+                <div
+                  className='absolute left-0 top-0 h-full rounded-full transition-all duration-500'
+                  style={{
+                    width: `${readiness.rri}%`,
+                    backgroundColor:
+                      readiness.tier === 'Execution Ready'      ? 'rgba(34,197,94,0.45)'
+                      : readiness.tier === 'Conditionally Ready' ? 'rgba(251,191,36,0.45)'
+                      : 'rgba(239,68,68,0.35)',
+                  }}
+                />
+                <div className='absolute top-0 bottom-0 w-px bg-white/20' style={{ left: '45%' }} />
+                <div className='absolute top-0 bottom-0 w-px bg-white/20' style={{ left: '70%' }} />
+              </div>
+              <div className='relative flex mt-1.5 text-[9px] text-white/20'>
+                <span>0</span>
+                <span className='absolute' style={{ left: 'calc(45% - 6px)' }}>45</span>
+                <span className='absolute' style={{ left: 'calc(70% - 6px)' }}>70</span>
+                <span className='ml-auto'>100</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Collapsible breakdown */}
+          {readinessExpanded && (
+            <div className='border-t border-white/8'>
+
+              {/* Gate violations */}
+              {readiness.hardStopViolations.length > 0 && (
+                <div className='px-5 py-4 border-b border-white/8'>
+                  <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium mb-3'>Gate Violations</p>
+                  <div className='space-y-2.5'>
+                    {readiness.hardStopViolations.map((v, i) => (
+                      <div key={i} className='flex items-start gap-2.5'>
+                        <div className='w-1 h-1 rounded-full bg-red-400/50 mt-1.5 shrink-0' />
+                        <p className='text-xs text-red-300/55 leading-relaxed'>{v}</p>
                       </div>
                     ))}
                   </div>
-                  {/* Footer metadata */}
-                  <div className='flex flex-wrap items-center gap-x-4 gap-y-1 pt-1.5 border-t border-white/5'>
-                    <span className='text-xs text-white/40'>
-                      Success: <span className='text-white/50'>{phase.successCriteria}</span>
-                    </span>
-                  </div>
-                  <div className='flex items-center gap-1.5'>
-                    <span className='text-xs text-white/35'>Activation:</span>
-                    <span className='text-xs text-[#7C5CFF]/60'>{phase.activationReason}</span>
-                  </div>
+                </div>
+              )}
+
+              {/* Signal contribution table */}
+              <div className='px-5 py-4 border-b border-white/8'>
+                <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium mb-3'>Signal Contribution Breakdown</p>
+                <div className='hidden md:grid grid-cols-12 mb-2 gap-x-2'>
+                  <span className='col-span-4 text-[9px] text-white/25 uppercase tracking-widest'>Metric</span>
+                  <span className='col-span-2 text-[9px] text-white/25 uppercase tracking-widest'>Value</span>
+                  <span className='col-span-2 text-[9px] text-white/25 uppercase tracking-widest'>Weight</span>
+                  <span className='col-span-2 text-[9px] text-white/25 uppercase tracking-widest'>Contribution</span>
+                  <span className='col-span-2 text-[9px] text-white/25 uppercase tracking-widest'>Status</span>
+                </div>
+                <div className='divide-y divide-white/[0.04]'>
+                  {readiness.metricBreakdown.map((row) => (
+                    <div key={row.key} className='grid grid-cols-12 items-center py-2 gap-x-2'>
+                      <span className='col-span-4 text-xs text-white/55'>{row.label}</span>
+                      <span className={`col-span-2 text-xs tabular-nums font-medium ${
+                        !row.meetsMinimum ? 'text-amber-400/70' : 'text-white/50'
+                      }`}>{row.value}</span>
+                      <span className='col-span-2 text-xs text-white/25 tabular-nums'>{row.weight}%</span>
+                      <span className='col-span-2 text-xs text-white/45 tabular-nums'>{row.contribution}</span>
+                      <span className='col-span-2 text-[10px]'>
+                        {row.meetsMinimum
+                          ? <span className='text-white/20'>—</span>
+                          : <span className='text-amber-400/45'>Below min.</span>
+                        }
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div className='mt-3 pt-2.5 border-t border-white/6 flex flex-wrap items-center gap-x-5 gap-y-1'>
+                  <span className='text-[10px] text-white/35'>RRI Total: <span className='text-white/50 font-medium tabular-nums'>{readiness.rri} / 100</span></span>
+                  <span className='text-[10px] text-white/20'>Conditional gate: 45 · Execution gate: 70</span>
                 </div>
               </div>
+
+              {/* Improvement signal */}
+              {readiness.improvementSignal && (
+                <div className='px-5 py-4'>
+                  <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium mb-2'>Improvement Signal</p>
+                  <p className='text-xs text-white/45 leading-relaxed'>
+                    A +1.0 improvement in{' '}
+                    <span className='text-white/65 font-medium'>{readiness.improvementSignal.label}</span>
+                    {' '}(currently {readiness.improvementSignal.currentValue}) advances the Readiness Index by{' '}
+                    <span className='text-white/65 font-medium'>+{readiness.improvementSignal.rriGainPerPoint} points</span>.
+                    {readiness.tier === 'Conditionally Ready' && (
+                      <span className='text-white/30'>
+                        {' '}{readiness.improvementSignal.pointsToNextTier} metric points needed in this dimension to reach Execution Ready.
+                      </span>
+                    )}
+                  </p>
+                </div>
+              )}
             </div>
-          ))}
+          )}
+
+          {/* Framework footer */}
+          <div className='px-5 py-2.5 border-t border-white/6 bg-white/1.5 flex flex-wrap items-center gap-x-6 gap-y-1'>
+            <span className='text-[10px] text-white/25'>Not Ready: RRI &lt; 45 or hard stop violated</span>
+            <span className='text-[10px] text-white/25'>Conditional: 45–69</span>
+            <span className='text-[10px] text-white/25'>Execution Ready: ≥ 70</span>
+          </div>
+        </div>
+
+        {/* ─ Roadmap — gated by readiness tier ─ */}
+        {readiness.tier === 'Not Ready' ? (
+          <div className='w-full border border-white/6 rounded-[5px]'>
+            <div className='px-5 py-3 border-b border-white/5 bg-white/[0.015] rounded-t-[5px] flex items-center gap-3'>
+              <h1 className='text-base font-medium text-white/25 tracking-wide'>Structured Action Roadmap</h1>
+              <span className='text-[10px] text-white/20 uppercase tracking-widest font-medium'>Generation Blocked</span>
+            </div>
+            <div className='px-5 py-10 text-center'>
+              <p className='text-sm text-white/20 mb-1.5'>Roadmap generation blocked.</p>
+              <p className='text-xs text-white/15 max-w-sm mx-auto leading-relaxed'>
+                One or more structural prerequisites have not been satisfied. Resolve gate violations in the Execution Readiness Framework above.
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className='w-full'>
+
+            {/* Conditional governance banner */}
+            {readiness.tier === 'Conditionally Ready' && (
+              <div className='mb-3 px-4 py-3 border border-amber-500/12 rounded-[5px] bg-amber-500/[0.025] flex items-start gap-3'>
+                <div className='w-0.5 shrink-0 self-stretch rounded-full bg-amber-500/25' />
+                <div>
+                  <p className='text-[10px] text-amber-400/55 uppercase tracking-widest font-medium mb-1'>Conditional Analytical Maturity</p>
+                  <p className='text-xs text-white/30 leading-relaxed'>
+                    Readiness Index {readiness.rri}/100 — below the Execution Ready threshold of 70.
+                    This roadmap is directional. Execution confidence is constrained by weak signals. Validate inputs before committing resources.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <div className='flex justify-between items-center px-2 mb-3'>
+              <h1 className='text-xl text-white/90'>Structured Action Roadmap</h1>
+              <div className='flex items-center gap-3'>
+                <span className='text-xs text-white/40'>{roadmap.length} phases activated</span>
+                <BsThreeDots className='text-white/40 hover:text-white cursor-pointer' />
+              </div>
+            </div>
+            <div className='space-y-0'>
+              {roadmap.map((phase, i) => (
+                <div key={phase.id} className='relative flex gap-0'>
+                  <div className='flex flex-col items-center w-10 shrink-0'>
+                    <div className='w-7 h-7 rounded-full border border-[#7C5CFF]/50 bg-[#7C5CFF]/10 flex items-center justify-center z-10'>
+                      <span className='text-xs font-semibold text-[#7C5CFF]'>{phase.sequence}</span>
+                    </div>
+                    {i < roadmap.length - 1 && (
+                      <div className='w-px flex-1 bg-[#7C5CFF]/20' />
+                    )}
+                  </div>
+                  <div className='flex-1 mb-3 ml-2 border border-white/10 rounded-[5px] overflow-hidden'>
+                    <div className='flex items-center gap-3 px-4 py-3 bg-white/2'>
+                      <div className='w-8 h-8 shrink-0 rounded-[5px] border border-[#7C5CFF]/30 bg-[#7C5CFF]/10 flex items-center justify-center'>
+                        {getPhaseIcon(phase.iconKey)}
+                      </div>
+                      <div className='flex-1 min-w-0'>
+                        <h3 className='text-sm font-semibold text-white/90'>{phase.name}</h3>
+                      </div>
+                      <span className='text-xs text-white/40 shrink-0'>{phase.duration}</span>
+                      <span className={`text-xs px-2 py-0.5 rounded-[3px] shrink-0 ${
+                        phase.type === 'mandatory' ? 'bg-[#7C5CFF]/15 text-[#7C5CFF]' :
+                        phase.type === 'conditional' ? 'bg-yellow-500/10 text-yellow-500/70' :
+                        'bg-white/5 text-white/40'
+                      }`}>{phase.type}</span>
+                      <BsThreeDots className='text-white/35 hover:text-white cursor-pointer shrink-0' />
+                    </div>
+                    <div className='px-4 py-3 space-y-2.5'>
+                      <p className='text-sm text-white/50 leading-5'>{phase.objective}</p>
+                      <div className='space-y-1.5'>
+                        {phase.actions.map((action, j) => (
+                          <div key={j} className='flex items-start gap-2'>
+                            <LuDot className='text-white/35 text-lg shrink-0 -mt-0.5' />
+                            <span className='text-xs text-white/45 leading-4'>{action}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className='flex flex-wrap items-center gap-x-4 gap-y-1 pt-1.5 border-t border-white/5'>
+                        <span className='text-xs text-white/40'>
+                          Success: <span className='text-white/50'>{phase.successCriteria}</span>
+                        </span>
+                      </div>
+                      <div className='flex items-center gap-1.5'>
+                        <span className='text-xs text-white/35'>Activation:</span>
+                        <span className='text-xs text-[#7C5CFF]/60'>{phase.activationReason}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ═══ Strategic Advisor ═══ */}
+      <div id='strategic-advisor' className='w-full border border-white/8 rounded-[5px] bg-white/2'>
+        <div className='w-full px-5 py-3 border-b border-white/8 bg-white/3 rounded-t-[5px] flex items-center justify-between'>
+          <div className='flex items-center gap-3'>
+            <h1 className='text-base font-medium text-white/90 tracking-wide'>Strategic Advisor</h1>
+            <span className='text-[10px] text-white/40 uppercase tracking-widest font-medium'>AI Panel</span>
+          </div>
+        </div>
+        <div className='px-5 py-5'>
+          <p className='text-[10px] text-white/40 uppercase tracking-widest font-medium mb-3'>Advisory Interface</p>
+          <p className='text-sm text-white/55 leading-relaxed max-w-xl'>
+            The Strategic Advisor panel is available on the right. Submit questions to interrogate assumptions, challenge the risk profile, or explore alternative strategic positions based on this evaluation.
+          </p>
+          <div className='mt-4 flex items-center gap-2'>
+            <div className='w-1.5 h-1.5 rounded-full bg-[#7C5CFF]/50' />
+            <p className='text-[11px] text-white/35'>Active — see panel on the right</p>
+          </div>
         </div>
       </div>
 

@@ -27,7 +27,7 @@ function Chat() {
   };
 
   return (
-    <div className='w-full max-w-[450px] h-[600px] rounded-[5px] border border-white/8 bg-white/2 font-primary flex flex-col'>
+    <div className='w-full max-w-[450px] h-[700px] rounded-[5px] border border-white/8 bg-white/2 font-primary flex flex-col'>
       {/* Header */}
       <div className='w-full px-4 py-3 border-b border-white/8 bg-white/3 rounded-t-[5px] flex items-center justify-between'>
         <div className='flex items-center gap-2.5'>
