@@ -1,32 +1,79 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from "motion/react"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { supabase } from '@/lib/supabaseClient'
-import Avatar from '@mui/material/Avatar'
 import { HiOutlineSlash } from "react-icons/hi2"
 
-interface NavbarProps {
-  breadcrumb?: {
-    label: string
-    href?: string
-  }[]
+interface UserProfile {
+  full_name?: string
+  email: string
+  avatar_url?: string
 }
 
-export default function Navbar({ breadcrumb }: NavbarProps) {
+export default function Navbar() {
+  const pathname = usePathname()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [profile, setProfile] = useState<UserProfile | null>(null)
   const router = useRouter()
+
+  useEffect(() => {
+    fetchProfile()
+  }, [])
+  
+  const fetchProfile = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) return
+
+      // Fetch profile from API
+      const response = await fetch('/api/settings', {
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`
+        }
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        setProfile({
+          full_name: data.full_name,
+          email: session.user.email || '',
+          avatar_url: data.avatar_url
+        })
+      }
+    } catch (error) {
+      console.error('Failed to fetch profile:', error)
+    }
+  }
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
     router.push("/auth/login")
   }
 
+  const getBreadcrumb = () => {
+    if (pathname === '/projects') {
+      return [{ label: 'Projects' }]
+    }
+    if (pathname === '/profile') {
+      return [{ label: 'Profile' }]
+    }
+    if (pathname.startsWith('/idea/')) {
+      return [
+        { label: 'Projects', href: '/projects' },
+        { label: 'Idea Detail' } 
+      ]
+    }
+    return []
+  }
+
+  const breadcrumb = getBreadcrumb()
+
   return (
-    <nav className='fixed z-10 flex items-center w-full px-3 bg-[#141414] text-white border-b border-white/10'>
+    <nav className='fixed top-0 left-0 z-10 flex items-center w-full h-14 px-3 bg-[#141414] text-white border-b border-white/10'>
       <div className='flex items-center w-full'>
         <Image src="/logo2.png" alt="logo" width={30} height={30} className="relative z-10" />
         
@@ -34,22 +81,18 @@ export default function Navbar({ breadcrumb }: NavbarProps) {
         <div className="absolute top-0 text-center w-full h-full z-0">
           <div className="w-full h-full flex justify-center items-center">
             <p className="text-sm flex items-center">
-              {breadcrumb ? (
-                breadcrumb.map((item, index) => (
-                  <span key={index} className="flex items-center">
-                    {item.href ? (
-                      <Link href={item.href} className="text-white/65 underline">
-                        {item.label}
-                      </Link>
-                    ) : (
-                      <span>{item.label}</span>
-                    )}
-                    {index < breadcrumb.length - 1 && <HiOutlineSlash className="mx-2" />}
-                  </span>
-                ))
-              ) : (
-                <span>Projects</span>
-              )}
+              {breadcrumb.map((item, index) => (
+                <span key={index} className="flex items-center">
+                  {item.href ? (
+                    <Link href={item.href} className="text-white/65 underline">
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <span>{item.label}</span>
+                  )}
+                  {index < breadcrumb.length - 1 && <HiOutlineSlash className="mx-2" />}
+                </span>
+              ))}
             </p>
           </div>
         </div>
@@ -64,7 +107,18 @@ export default function Navbar({ breadcrumb }: NavbarProps) {
               <p className='text-sm font-semibold'>Lan Kuhar</p>
               <p className='text-xs text-gray-400'>Administrator</p>
             </div>
-            <Avatar alt="Lan Kuhar" src="/profile.jpg" sx={{ width: 30, height: 30 }} />
+            {/* Avatar */}
+            <div className='w-8 h-8 rounded-full overflow-hidden bg-white/10 flex items-center justify-center'>
+              {profile?.avatar_url ? (
+                <img 
+                  src={profile.avatar_url} 
+                  alt="Avatar" 
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="text-sm">👤</span>
+              )}
+            </div>
           </button>
 
           {/* Dropdown Menu */}

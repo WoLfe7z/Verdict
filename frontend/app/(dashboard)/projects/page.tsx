@@ -7,8 +7,6 @@ import { usePathname, useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabaseClient"
 import Link from "next/link"
 
-import Navbar from "@/components/layout/navbar"
-
 // Icons
 import { CiMoneyCheck1 } from "react-icons/ci"
 import { GoProjectRoadmap } from "react-icons/go"
@@ -158,8 +156,6 @@ export default function Page() {
 
   return (
     <div className="font-primary">
-      <Navbar />
-
       <div
         onMouseEnter={() => setIsExpanded(true)}
         onMouseLeave={() => setIsExpanded(false)}

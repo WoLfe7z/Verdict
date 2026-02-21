@@ -40,7 +40,10 @@ export async function updateSettings(req: AuthRequest, res: Response) {
       .select()
       .single()
 
-    if (error) throw error
+     if (error) {
+      console.error('Supabase upsert error:', error)  // ← Dodaj
+      throw error
+    }
 
     res.json(data)
 
